@@ -25,6 +25,7 @@ class Order extends Model
         'total_amount',
         'status',
         'paid_at',
+        'invoice_email_sent_at',
         'expired_at',
     ];
 
@@ -34,6 +35,7 @@ class Order extends Model
         'admin_fee' => 'integer',
         'total_amount' => 'integer',
         'paid_at' => 'datetime',
+        'invoice_email_sent_at' => 'datetime',
         'expired_at' => 'datetime',
     ];
 

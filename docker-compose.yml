@@ -1,18 +1,22 @@
 version: '3.8'
+
 services:
   php:
     build:
       context: ./php
     container_name: ${COMPOSE_PROJECT_NAME}_php
-    # Teruskan variabel PROJECT_NAME ke dalam kontainer
     environment:
       - PROJECT_NAME=${PROJECT_NAME}
       - XDEBUG=${XDEBUG:-false}
+    env_file:
+      - ./.docker-env/laravel.env
     volumes:
       - ./src:/var/www/html
+      - ./.docker-env/laravel.env:/var/www/html/.env:ro
     depends_on:
       db:
         condition: service_healthy
+
   nginx:
     build:
       context: ./nginx
@@ -26,6 +30,7 @@ services:
       - ./nginx/ssl:/etc/nginx/ssl:ro
     depends_on:
       - php
+
   db:
     image: mariadb:10.11
     container_name: ${COMPOSE_PROJECT_NAME}_db
@@ -38,7 +43,6 @@ services:
     ports:
       - "13306:3306"
     environment:
-      # Database ini akan dibuat saat kontainer pertama kali dijalankan
       MYSQL_DATABASE: ${PROJECT_NAME}
       MYSQL_ROOT_PASSWORD: p455w0rd
     volumes:

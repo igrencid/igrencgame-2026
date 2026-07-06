@@ -16,6 +16,8 @@ class GameInputFieldResource extends Resource
 {
     protected static ?string $model = GameInputField::class;
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static ?string $navigationIcon = 'heroicon-o-adjustments-horizontal';
 
     protected static ?string $navigationGroup = 'Katalog';
@@ -33,6 +35,7 @@ class GameInputFieldResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make('Field Customer')
+                    ->description('Konfigurasi field yang nanti akan diisi oleh buyer saat checkout.')
                     ->schema([
                         Forms\Components\Grid::make(2)
                             ->schema([

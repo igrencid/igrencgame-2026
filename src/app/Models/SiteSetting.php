@@ -15,6 +15,10 @@ class SiteSetting extends Model
         'favicon_path',
         'seo_description',
         'is_active',
+        'customer_service_whatsapp',
+        'customer_service_email',
+        'customer_service_label',
+        'customer_service_working_hours',
     ];
 
     protected $casts = [

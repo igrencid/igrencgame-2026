@@ -13,6 +13,12 @@ use Spatie\Activitylog\Models\Activity;
 class LatestAccessLogs extends BaseWidget
 {
     use HasWidgetShield;
+
+    public static function canView(): bool
+    {
+        return false;
+    }
+
     protected static ?int $sort = 100;
 
     protected int|string|array $columnSpan = 2;

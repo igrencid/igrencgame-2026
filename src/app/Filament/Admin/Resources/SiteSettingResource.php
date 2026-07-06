@@ -102,6 +102,33 @@ class SiteSettingResource extends Resource
                             ->helperText('Rekomendasi ukuran 64x64 atau 128x128. Pakai emblem sederhana.'),
                     ])
                     ->columns(2),
+
+                Forms\Components\Section::make('Customer Service')
+                    ->description('Atur kontak customer service yang akan ditampilkan di public website.')
+                    ->schema([
+                        Forms\Components\TextInput::make('customer_service_whatsapp')
+                            ->label('Nomor WhatsApp CS')
+                            ->placeholder('6285813295317')
+                            ->helperText('Gunakan format internasional tanpa tanda +, contoh 6285813295317')
+                            ->maxLength(20),
+
+                        Forms\Components\TextInput::make('customer_service_email')
+                            ->label('Email Customer Service')
+                            ->type('email')
+                            ->placeholder('support@igrencgame.test')
+                            ->maxLength(100),
+
+                        Forms\Components\TextInput::make('customer_service_label')
+                            ->label('Label Tombol CS')
+                            ->default('Hubungi CS')
+                            ->maxLength(50),
+
+                        Forms\Components\TextInput::make('customer_service_working_hours')
+                            ->label('Jam Operasional')
+                            ->placeholder('Setiap hari 09.00 - 22.00 WIB')
+                            ->maxLength(100),
+                    ])
+                    ->columns(2),
             ]);
     }
 

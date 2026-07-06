@@ -1,12 +1,20 @@
-# Docker data
+# Database volume
 db/data/
-# Dependencies
+
+# Docker env secrets
+.docker-env/
+.env
+
+# Laravel app
 src/vendor/
 src/node_modules/
-# IDE & OS files
+src/.env
+src/public/storage
+src/storage/logs/*.log
+
+# OS / IDE
+.DS_Store
 .idea/
 .vscode/
-.DS_Store
-# Environment files
-.env
-src/.env
+.env.local.backup
+*.backup

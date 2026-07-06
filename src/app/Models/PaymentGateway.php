@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PaymentGateway extends Model
 {
@@ -29,18 +29,38 @@ class PaymentGateway extends Model
         'sort_order' => 'integer',
     ];
 
-    public function scopeActive(Builder $query): Builder
+    public static function ensureMidtrans(): self
     {
-        return $query->where('is_active', true);
+        $mode = config('midtrans.is_production') ? 'production' : 'sandbox';
+
+        return self::query()->updateOrCreate(
+            [
+                'provider' => 'midtrans',
+                'mode' => $mode,
+            ],
+            [
+                'name' => $mode === 'production'
+                    ? 'Midtrans Production'
+                    : 'Midtrans Sandbox',
+                'display_label' => 'Midtrans',
+                'fee_type' => 'fixed',
+                'fee_value' => 2500,
+                'minimum_amount' => 0,
+                'maximum_amount' => null,
+                'instruction' => 'Bayar melalui Midtrans Snap.',
+                'is_active' => true,
+                'sort_order' => 1,
+            ]
+        );
     }
 
-    public function isMidtrans(): bool
+    public function orders(): HasMany
     {
-        return $this->provider === 'midtrans';
+        return $this->hasMany(Order::class);
     }
 
-    public function isProduction(): bool
+    public function payments(): HasMany
     {
-        return $this->mode === 'production';
+        return $this->hasMany(Payment::class);
     }
 }

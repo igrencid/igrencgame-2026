@@ -12,6 +12,13 @@
     $siteDescription = $siteSetting?->seo_description ?: 'Platform top up game online cepat, aman, dan mudah digunakan.';
     $siteLogoUrl = $siteSetting?->logo_url;
     $siteFaviconUrl = $siteSetting?->favicon_url;
+
+    $whatsappNumber = $siteSetting?->customer_service_whatsapp;
+    $csEmail = $siteSetting?->customer_service_email;
+    $csHours = $siteSetting?->customer_service_working_hours;
+
+    $waMessage = urlencode('Halo admin IgrencGame, saya butuh bantuan terkait pesanan.');
+    $waUrl = $whatsappNumber ? "https://wa.me/{$whatsappNumber}?text={$waMessage}" : null;
 @endphp
 
 <!DOCTYPE html>
@@ -81,19 +88,15 @@
 
                 <nav class="hidden items-center gap-8 md:flex">
                     <a href="{{ route('home') }}" class="text-sm font-bold text-slate-700 transition hover:text-indigo-600">
-                        Home
+                        Beranda
                     </a>
 
                     <a href="{{ route('home') }}#games" class="text-sm font-bold text-slate-700 transition hover:text-indigo-600">
-                        Games
+                        Top Up Game
                     </a>
 
                     <a href="{{ route('home') }}#cek-pesanan" class="text-sm font-bold text-slate-700 transition hover:text-indigo-600">
                         Cek Pesanan
-                    </a>
-
-                    <a href="{{ route('home') }}#bantuan" class="text-sm font-bold text-slate-700 transition hover:text-indigo-600">
-                        Bantuan
                     </a>
                 </nav>
 
@@ -122,19 +125,15 @@
             >
                 <div class="mx-auto flex max-w-7xl flex-col gap-2">
                     <a href="{{ route('home') }}" class="rounded-2xl px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100 hover:text-indigo-600">
-                        Home
+                        Beranda
                     </a>
 
                     <a href="{{ route('home') }}#games" class="rounded-2xl px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100 hover:text-indigo-600">
-                        Games
+                        Top Up Game
                     </a>
 
                     <a href="{{ route('home') }}#cek-pesanan" class="rounded-2xl px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100 hover:text-indigo-600">
                         Cek Pesanan
-                    </a>
-
-                    <a href="{{ route('home') }}#bantuan" class="rounded-2xl px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100 hover:text-indigo-600">
-                        Bantuan
                     </a>
                 </div>
             </div>
@@ -179,20 +178,16 @@
                     </div>
 
                     <p class="mt-4 text-sm leading-6 text-slate-400">
-                        {{ $siteDescription }}
+                        Platform top up game online terpercaya, cepat, dan aman untuk kebutuhan game favoritmu.
                     </p>
                 </div>
 
                 <div>
-                    <h3 class="text-sm font-extrabold">Menu</h3>
+                    <h3 class="text-sm font-extrabold">Produk</h3>
 
                     <div class="mt-4 space-y-3 text-sm text-slate-400">
-                        <a href="{{ route('home') }}" class="block transition hover:text-white">
-                            Home
-                        </a>
-
                         <a href="{{ route('home') }}#games" class="block transition hover:text-white">
-                            Games
+                            Lihat Semua Game
                         </a>
 
                         <a href="{{ route('home') }}#cek-pesanan" class="block transition hover:text-white">
@@ -202,27 +197,91 @@
                 </div>
 
                 <div>
-                    <h3 class="text-sm font-extrabold">Layanan</h3>
+                    <h3 class="text-sm font-extrabold">Butuh Bantuan?</h3>
 
                     <div class="mt-4 space-y-3 text-sm text-slate-400">
-                        <p>Top Up Game</p>
-                        <p>Pembayaran Online</p>
-                        <p>Riwayat Pesanan</p>
+                        @if ($waUrl)
+                            <a
+                                href="{{ $waUrl }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="inline-flex rounded-full border border-slate-700 px-3 py-1.5 text-slate-300 transition hover:border-indigo-400 hover:text-white"
+                            >
+                                Hubungi Kami
+                            </a>
+                        @endif
+
+                        <a href="{{ route('faq.index') }}" class="block transition hover:text-white">
+                            FAQ
+                        </a>
+
+                        <a href="{{ route('terms.show') }}" class="block transition hover:text-white">
+                            Syarat & Ketentuan
+                        </a>
+
+                        <a href="{{ route('privacy.show') }}" class="block transition hover:text-white">
+                            Kebijakan Privasi
+                        </a>
                     </div>
                 </div>
 
                 <div>
-                    <h3 class="text-sm font-extrabold">Bantuan</h3>
+                    <h3 class="text-sm font-extrabold">Customer Service</h3>
 
                     <div class="mt-4 space-y-3 text-sm leading-6 text-slate-400">
-                        <p>Gunakan fitur cek pesanan untuk melihat status transaksi.</p>
-                        <p>Data layanan, harga, dan metode pembayaran dikelola melalui sistem internal.</p>
+                        @if ($whatsappNumber || $csEmail || $csHours)
+                            @if ($whatsappNumber)
+                                <div>
+                                    <span class="block text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        WhatsApp
+                                    </span>
+
+                                    <a
+                                        href="{{ $waUrl }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="font-semibold text-slate-300 transition hover:text-white"
+                                    >
+                                        {{ $whatsappNumber }}
+                                    </a>
+                                </div>
+                            @endif
+
+                            @if ($csEmail)
+                                <div>
+                                    <span class="block text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        Email
+                                    </span>
+
+                                    <a
+                                        href="mailto:{{ $csEmail }}"
+                                        class="font-semibold text-slate-300 transition hover:text-white"
+                                    >
+                                        {{ $csEmail }}
+                                    </a>
+                                </div>
+                            @endif
+
+                            @if ($csHours)
+                                <div>
+                                    <span class="block text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                        Jam Operasional
+                                    </span>
+
+                                    <span class="font-semibold text-slate-300">
+                                        {{ $csHours }}
+                                    </span>
+                                </div>
+                            @endif
+                        @else
+                            <p>Data customer service belum tersedia.</p>
+                        @endif
                     </div>
                 </div>
             </div>
 
             <div class="border-t border-white/10 px-4 py-5 text-center text-xs text-slate-500">
-                © {{ date('Y') }} {{ $siteName }}. All rights reserved.
+                © {{ date('Y') }} {{ $siteName }}. Semua hak dilindungi.
             </div>
         </footer>
     </div>

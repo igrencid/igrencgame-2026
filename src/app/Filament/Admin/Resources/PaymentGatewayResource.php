@@ -28,96 +28,100 @@ class PaymentGatewayResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\Section::make('Gateway Utama')
-                    ->description('Konfigurasi gateway pembayaran. Secret key Midtrans tetap disimpan di file .env.')
-                    ->schema([
-                        Forms\Components\Grid::make(2)
-                            ->schema([
-                                Forms\Components\TextInput::make('name')
-                                    ->label('Nama Gateway')
-                                    ->placeholder('Midtrans Snap')
-                                    ->required()
-                                    ->maxLength(255),
+        return $form->schema([
+            Forms\Components\Section::make('Gateway Utama')
+                ->description('Konfigurasi gateway pembayaran. Secret key Midtrans tetap disimpan di file .env.')
+                ->schema([
+                    Forms\Components\Grid::make(2)->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nama Gateway')
+                            ->placeholder('Midtrans Sandbox')
+                            ->required()
+                            ->maxLength(255),
 
-                                Forms\Components\Select::make('provider')
-                                    ->label('Provider')
-                                    ->options([
-                                        'midtrans' => 'Midtrans',
-                                    ])
-                                    ->default('midtrans')
-                                    ->required(),
+                        Forms\Components\Select::make('provider')
+                            ->label('Provider')
+                            ->options([
+                                'midtrans' => 'Midtrans',
+                            ])
+                            ->default('midtrans')
+                            ->required()
+                            ->native(false),
 
-                                Forms\Components\Select::make('mode')
-                                    ->label('Mode')
-                                    ->options([
-                                        'sandbox' => 'Sandbox',
-                                        'production' => 'Production',
-                                    ])
-                                    ->default('sandbox')
-                                    ->required(),
+                        Forms\Components\Select::make('mode')
+                            ->label('Mode')
+                            ->options([
+                                'sandbox' => 'Sandbox',
+                                'production' => 'Production',
+                            ])
+                            ->default('sandbox')
+                            ->required()
+                            ->native(false),
 
-                                Forms\Components\TextInput::make('display_label')
-                                    ->label('Label Tampilan')
-                                    ->placeholder('Bayar otomatis via Midtrans')
-                                    ->maxLength(255),
+                        Forms\Components\TextInput::make('display_label')
+                            ->label('Label Tampilan')
+                            ->placeholder('Midtrans')
+                            ->default('Midtrans')
+                            ->required()
+                            ->maxLength(255),
 
-                                Forms\Components\TextInput::make('sort_order')
-                                    ->label('Urutan')
-                                    ->numeric()
-                                    ->default(0)
-                                    ->required(),
+                        Forms\Components\TextInput::make('sort_order')
+                            ->label('Urutan')
+                            ->numeric()
+                            ->default(1)
+                            ->required(),
 
-                                Forms\Components\Toggle::make('is_active')
-                                    ->label('Aktif')
-                                    ->default(true)
-                                    ->required(),
-                            ]),
+                        Forms\Components\Toggle::make('is_active')
+                            ->label('Aktif')
+                            ->default(true)
+                            ->required(),
                     ]),
+                ]),
 
-                Forms\Components\Section::make('Fee dan Batas Transaksi')
-                    ->schema([
-                        Forms\Components\Grid::make(2)
-                            ->schema([
-                                Forms\Components\Select::make('fee_type')
-                                    ->label('Tipe Fee')
-                                    ->options([
-                                        'fixed' => 'Fixed',
-                                        'percent' => 'Percent',
-                                    ])
-                                    ->default('fixed')
-                                    ->required(),
+            Forms\Components\Section::make('Fee dan Batas Transaksi')
+                ->schema([
+                    Forms\Components\Grid::make(2)->schema([
+                        Forms\Components\Select::make('fee_type')
+                            ->label('Tipe Fee')
+                            ->options([
+                                'fixed' => 'Fixed',
+                                'percentage' => 'Percentage',
+                            ])
+                            ->default('fixed')
+                            ->required()
+                            ->native(false),
 
-                                Forms\Components\TextInput::make('fee_value')
-                                    ->label('Nilai Fee')
-                                    ->numeric()
-                                    ->default(0)
-                                    ->required(),
+                        Forms\Components\TextInput::make('fee_value')
+                            ->label('Nilai Fee')
+                            ->numeric()
+                            ->default(2500)
+                            ->required(),
 
-                                Forms\Components\TextInput::make('minimum_amount')
-                                    ->label('Minimum Transaksi')
-                                    ->prefix('Rp')
-                                    ->numeric()
-                                    ->default(0)
-                                    ->required(),
+                        Forms\Components\TextInput::make('minimum_amount')
+                            ->label('Minimum Transaksi')
+                            ->prefix('Rp')
+                            ->numeric()
+                            ->default(0)
+                            ->required(),
 
-                                Forms\Components\TextInput::make('maximum_amount')
-                                    ->label('Maximum Transaksi')
-                                    ->prefix('Rp')
-                                    ->numeric(),
-                            ]),
+                        Forms\Components\TextInput::make('maximum_amount')
+                            ->label('Maximum Transaksi')
+                            ->prefix('Rp')
+                            ->numeric()
+                            ->nullable(),
                     ]),
+                ]),
 
-                Forms\Components\Section::make('Instruksi')
-                    ->schema([
-                        Forms\Components\Textarea::make('instruction')
-                            ->label('Instruksi Pembayaran')
-                            ->placeholder('Customer akan diarahkan ke halaman pembayaran Midtrans.')
-                            ->rows(4)
-                            ->columnSpanFull(),
-                    ]),
-            ]);
+            Forms\Components\Section::make('Instruksi')
+                ->schema([
+                    Forms\Components\Textarea::make('instruction')
+                        ->label('Instruksi Pembayaran')
+                        ->placeholder('Customer akan diarahkan ke halaman pembayaran Midtrans.')
+                        ->default('Bayar melalui Midtrans Snap.')
+                        ->rows(4)
+                        ->columnSpanFull(),
+                ]),
+        ]);
     }
 
     public static function table(Table $table): Table
@@ -145,12 +149,22 @@ class PaymentGatewayResource extends Resource
                         default => 'warning',
                     }),
 
+                Tables\Columns\TextColumn::make('display_label')
+                    ->label('Label'),
+
                 Tables\Columns\TextColumn::make('fee_type')
                     ->label('Tipe Fee')
                     ->badge(),
 
                 Tables\Columns\TextColumn::make('fee_value')
                     ->label('Fee')
+                    ->formatStateUsing(function ($record) {
+                        if ($record->fee_type === 'percentage') {
+                            return $record->fee_value . '%';
+                        }
+
+                        return 'Rp ' . number_format((int) $record->fee_value, 0, ',', '.');
+                    })
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('minimum_amount')

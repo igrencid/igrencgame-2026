@@ -4,11 +4,15 @@ namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\OrderResource\Pages;
 use App\Models\Order;
+use App\Models\Payment;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class OrderResource extends Resource
 {
@@ -179,8 +183,86 @@ class OrderResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->action(static function (Order $record): void {
+                        DB::transaction(static function () use ($record): void {
+                            Payment::query()
+                                ->where('order_id', $record->id)
+                                ->delete();
+
+                            $record->delete();
+                        });
+
+                        Notification::make()
+                            ->success()
+                            ->title('Order berhasil dihapus')
+                            ->body('Order dan payment terkait telah dihapus.')
+                            ->send();
+                    })
+                    ->requiresConfirmation()
+                    ->color('danger'),
             ])
-            ->bulkActions([]);
+            ->bulkActions([
+                Tables\Actions\BulkAction::make('deleteSelectedOrders')
+                    ->label('Hapus Order Dipilih')
+                    ->action(static function (Collection $records): void {
+                        $orderIds = $records->pluck('id')->all();
+
+                        DB::transaction(static function () use ($orderIds): void {
+                            Payment::query()
+                                ->whereIn('order_id', $orderIds)
+                                ->delete();
+
+                            Order::query()
+                                ->whereIn('id', $orderIds)
+                                ->delete();
+                        });
+
+                        Notification::make()
+                            ->success()
+                            ->title('Order berhasil dihapus')
+                            ->body('Semua order yang dipilih dan payment terkait telah dihapus.')
+                            ->send();
+                    })
+                    ->requiresConfirmation()
+                    ->color('danger'),
+
+                Tables\Actions\BulkAction::make('deleteFailedExpiredSelectedOrders')
+                    ->label('Hapus Gagal/Expired Dipilih')
+                    ->action(static function (Collection $records): void {
+                        $failedExpiredOrders = $records->filter(static fn (Order $order): bool => in_array($order->status, ['failed', 'expired'], true));
+
+                        if ($failedExpiredOrders->isEmpty()) {
+                            Notification::make()
+                                ->warning()
+                                ->title('Tidak ada data yang cocok')
+                                ->body('Pilih order dengan status failed atau expired sebelum melakukan aksi ini.')
+                                ->send();
+
+                            return;
+                        }
+
+                        $orderIds = $failedExpiredOrders->pluck('id')->all();
+
+                        DB::transaction(static function () use ($orderIds): void {
+                            Payment::query()
+                                ->whereIn('order_id', $orderIds)
+                                ->delete();
+
+                            Order::query()
+                                ->whereIn('id', $orderIds)
+                                ->delete();
+                        });
+
+                        Notification::make()
+                            ->success()
+                            ->title('Order gagal/expired berhasil dihapus')
+                            ->body('Order failed/expired yang dipilih dan payment terkait telah dihapus.')
+                            ->send();
+                    })
+                    ->requiresConfirmation()
+                    ->color('danger'),
+            ]);
     }
 
     public static function getPages(): array
