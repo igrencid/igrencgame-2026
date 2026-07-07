@@ -361,6 +361,84 @@
                                 </div>
                             </div>
 
+                            <div class="border-t border-slate-200 pt-4">
+                                <p class="text-sm font-bold text-slate-900">
+                                    Kode Voucher
+                                </p>
+
+                                @guest('customer')
+                                    <div class="mt-3 rounded-2xl bg-amber-50 p-4 text-sm font-semibold text-amber-700">
+                                        Masuk ke akun untuk menggunakan kode voucher.
+
+                                        <a href="{{ route('customer.login') }}" class="font-extrabold underline">
+                                            Masuk
+                                        </a>
+                                    </div>
+                                @else
+                                    @if ($appliedVoucherCode)
+                                        <div class="mt-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+                                            <div class="flex items-start justify-between gap-3">
+                                                <div>
+                                                    <p class="text-sm font-extrabold text-emerald-700">
+                                                        {{ $appliedVoucherCode }} diterapkan
+                                                    </p>
+
+                                                    <p class="mt-1 text-xs font-semibold text-emerald-700">
+                                                        Diskon Rp {{ number_format($discountAmount, 0, ',', '.') }}
+                                                    </p>
+                                                </div>
+
+                                                <button
+                                                    type="button"
+                                                    wire:click="removeVoucher"
+                                                    wire:loading.attr="disabled"
+                                                    wire:target="removeVoucher,placeOrder"
+                                                    class="text-xs font-extrabold text-emerald-700 underline disabled:opacity-60"
+                                                >
+                                                    Hapus
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="mt-3 flex gap-2">
+                                            <input
+                                                type="text"
+                                                wire:model.defer="voucherCode"
+                                                placeholder="Contoh: MEMBER10"
+                                                wire:loading.attr="disabled"
+                                                wire:target="applyVoucher,placeOrder"
+                                                class="min-w-0 flex-1 rounded-2xl border-slate-200 bg-white px-4 py-3 text-sm font-bold uppercase shadow-sm focus:border-indigo-500 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-slate-100"
+                                            >
+
+                                            <button
+                                                type="button"
+                                                wire:click="applyVoucher"
+                                                wire:loading.attr="disabled"
+                                                wire:target="applyVoucher,placeOrder"
+                                                class="rounded-2xl bg-slate-950 px-4 py-3 text-sm font-extrabold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+                                            >
+                                                Pakai
+                                            </button>
+                                        </div>
+                                    @endif
+
+                                    @error('voucherCode')
+                                        <p class="mt-2 text-xs font-semibold text-rose-600">
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
+                                @endguest
+
+                                @if ($discountAmount > 0)
+                                    <div class="mt-4 flex justify-between gap-4 text-sm">
+                                        <span class="text-slate-500">Diskon voucher</span>
+                                        <span class="font-bold text-emerald-600">
+                                            - Rp {{ number_format($discountAmount, 0, ',', '.') }}
+                                        </span>
+                                    </div>
+                                @endif
+                            </div>
+
                             <div class="rounded-3xl bg-slate-950 p-5 text-white">
                                 <div class="flex items-center justify-between gap-4">
                                     <span class="text-sm font-semibold text-slate-300">

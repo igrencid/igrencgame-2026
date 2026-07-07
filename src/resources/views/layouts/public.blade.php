@@ -100,7 +100,48 @@
                     </a>
                 </nav>
 
-                <div class="hidden md:block"></div>
+                <div class="hidden items-center justify-end gap-3 md:flex">
+                    @guest('customer')
+                        <a
+                            href="{{ route('customer.login') }}"
+                            class="rounded-2xl px-4 py-2 text-sm font-bold text-slate-700 transition hover:text-indigo-600"
+                        >
+                            Masuk
+                        </a>
+
+                        <a
+                            href="{{ route('customer.register') }}"
+                            class="rounded-2xl bg-indigo-600 px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-indigo-700"
+                        >
+                            Daftar
+                        </a>
+                    @else
+                        <a
+                            href="{{ route('customer.account') }}"
+                            class="rounded-2xl px-4 py-2 text-sm font-bold text-slate-700 transition hover:text-indigo-600"
+                        >
+                            Akun Saya
+                        </a>
+
+                        <a
+                            href="{{ route('customer.orders') }}"
+                            class="rounded-2xl px-4 py-2 text-sm font-bold text-slate-700 transition hover:text-indigo-600"
+                        >
+                            Riwayat
+                        </a>
+
+                        <form method="POST" action="{{ route('customer.logout') }}">
+                            @csrf
+
+                            <button
+                                type="submit"
+                                class="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-100"
+                            >
+                                Keluar
+                            </button>
+                        </form>
+                    @endguest
+                </div>
 
                 <button
                     type="button"
@@ -135,6 +176,37 @@
                     <a href="{{ route('home') }}#cek-pesanan" class="rounded-2xl px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100 hover:text-indigo-600">
                         Cek Pesanan
                     </a>
+
+                    <div class="my-2 border-t border-slate-200"></div>
+
+                    @guest('customer')
+                        <a href="{{ route('customer.login') }}" class="rounded-2xl px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100 hover:text-indigo-600">
+                            Masuk
+                        </a>
+
+                        <a href="{{ route('customer.register') }}" class="rounded-2xl bg-indigo-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-indigo-700">
+                            Daftar
+                        </a>
+                    @else
+                        <a href="{{ route('customer.account') }}" class="rounded-2xl px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100 hover:text-indigo-600">
+                            Akun Saya
+                        </a>
+
+                        <a href="{{ route('customer.orders') }}" class="rounded-2xl px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100 hover:text-indigo-600">
+                            Riwayat Pesanan
+                        </a>
+
+                        <form method="POST" action="{{ route('customer.logout') }}">
+                            @csrf
+
+                            <button
+                                type="submit"
+                                class="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2.5 text-left text-sm font-bold text-slate-700 transition hover:bg-slate-100"
+                            >
+                                Keluar
+                            </button>
+                        </form>
+                    @endguest
                 </div>
             </div>
         </header>

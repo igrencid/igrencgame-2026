@@ -13,6 +13,11 @@ return Application::configure(basePath: dirname(__DIR__))
         api: __DIR__ . '/../routes/api.php',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'provider.key' => \App\Http\Middleware\AuthenticateApiProvider::class,
+            'customer.auth' => \App\Http\Middleware\EnsureCustomerAuthenticated::class,
+        ]);
+
         $middleware->validateCsrfTokens(except: [
             'midtrans/notification',
         ]);

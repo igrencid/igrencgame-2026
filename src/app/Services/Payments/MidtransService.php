@@ -35,7 +35,7 @@ class MidtransService
                 'id' => (string) ($order->game_product_id ?? 'product'),
                 'price' => (int) $order->product_price,
                 'quantity' => 1,
-                'name' => mb_substr($order->product_name, 0, 50),
+                'name' => mb_substr($order->product_name ?: 'Produk Top Up', 0, 50),
             ],
         ];
 
@@ -45,6 +45,15 @@ class MidtransService
                 'price' => (int) $order->admin_fee,
                 'quantity' => 1,
                 'name' => 'Biaya Admin',
+            ];
+        }
+
+        if ((int) ($order->discount_amount ?? 0) > 0) {
+            $itemDetails[] = [
+                'id' => 'voucher-discount',
+                'price' => -1 * (int) $order->discount_amount,
+                'quantity' => 1,
+                'name' => mb_substr('Diskon Voucher ' . ($order->voucher_code ?: ''), 0, 50),
             ];
         }
 

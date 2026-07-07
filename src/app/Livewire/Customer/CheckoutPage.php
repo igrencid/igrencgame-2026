@@ -7,12 +7,15 @@ use App\Models\GameProduct;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\PaymentGateway;
+use App\Models\Voucher;
 use App\Services\Generators\OrderNumberGenerator;
 use App\Services\Generators\PaymentNumberGenerator;
 use App\Services\Payments\MidtransService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Throwable;
 
@@ -33,6 +36,14 @@ class CheckoutPage extends Component
     public string $customerEmail = '';
 
     public string $customerPhone = '';
+
+    public string $voucherCode = '';
+
+    public ?int $appliedVoucherId = null;
+
+    public ?string $appliedVoucherCode = null;
+
+    public int $discountAmount = 0;
 
     public bool $isSubmitting = false;
 
@@ -66,6 +77,12 @@ class CheckoutPage extends Component
         foreach ($this->game->inputFields as $field) {
             $this->customerInputs[(string) $field->id] = '';
         }
+
+        if ($customer = Auth::guard('customer')->user()) {
+            $this->customerName = $customer->name ?? '';
+            $this->customerEmail = $customer->email ?? '';
+            $this->customerPhone = $customer->phone ?? '';
+        }
     }
 
     public function selectProduct(int $productId): void
@@ -75,6 +92,7 @@ class CheckoutPage extends Component
         }
 
         $this->productId = $productId;
+        $this->clearVoucher();
     }
 
     public function selectPaymentGateway(int $gatewayId): void
@@ -86,6 +104,7 @@ class CheckoutPage extends Component
         }
 
         $this->paymentGatewayId = $gateway->id;
+        $this->clearVoucher();
     }
 
     public function placeOrder()
@@ -147,15 +166,57 @@ class CheckoutPage extends Component
 
             $productPrice = (int) $product->selling_price;
             $adminFee = $this->calculateAdminFee($gateway, $productPrice);
-            $totalAmount = $productPrice + $adminFee;
+            $subtotalAmount = $productPrice + $adminFee;
             $expiredAt = now()->addMinutes(self::ORDER_EXPIRY_MINUTES);
+            $customerId = Auth::guard('customer')->id();
 
-            $order = DB::transaction(function () use ($product, $gateway, $productPrice, $adminFee, $totalAmount, $expiredAt) {
+            $order = DB::transaction(function () use ($product, $gateway, $productPrice, $adminFee, $subtotalAmount, $expiredAt, $customerId) {
+                $voucher = null;
+                $discountAmount = 0;
+
+                if ($this->appliedVoucherId && $this->appliedVoucherCode && $customerId) {
+                    $voucher = Voucher::query()
+                        ->whereKey($this->appliedVoucherId)
+                        ->lockForUpdate()
+                        ->first();
+
+                    if (! $voucher || $voucher->code !== $this->appliedVoucherCode) {
+                        throw \Illuminate\Validation\ValidationException::withMessages([
+                            'voucherCode' => 'Voucher tidak valid.',
+                        ]);
+                    }
+
+                    if ($error = $this->voucherError($voucher, $customerId, $subtotalAmount)) {
+                        throw \Illuminate\Validation\ValidationException::withMessages([
+                            'voucherCode' => $error,
+                        ]);
+                    }
+
+                    $discountAmount = min(
+                        $voucher->calculateDiscount($subtotalAmount),
+                        max(0, $subtotalAmount - 1)
+                    );
+
+                    if ($discountAmount <= 0) {
+                        throw \Illuminate\Validation\ValidationException::withMessages([
+                            'voucherCode' => 'Voucher tidak menghasilkan potongan.',
+                        ]);
+                    }
+
+                    $voucher->increment('used_count');
+                }
+
+                $totalAmount = max(1, $subtotalAmount - $discountAmount);
+
                 $order = Order::query()->create([
+                    'customer_id' => $customerId,
                     'invoice_number' => app(OrderNumberGenerator::class)->generate(),
                     'game_id' => $this->game->id,
                     'game_product_id' => $product->id,
                     'payment_gateway_id' => $gateway->id,
+                    'voucher_id' => $voucher?->id,
+                    'voucher_code' => $voucher?->code,
+                    'discount_amount' => $discountAmount,
                     'game_name' => $this->game->name,
                     'product_name' => $product->name,
                     'customer_inputs' => $this->formatCustomerInputs(),
@@ -222,6 +283,113 @@ class CheckoutPage extends Component
         return null;
     }
 
+
+    public function applyVoucher(): void
+    {
+        $this->resetErrorBag('voucherCode');
+
+        $customerId = Auth::guard('customer')->id();
+
+        if (! $customerId) {
+            $this->addError('voucherCode', 'Masuk dulu untuk menggunakan kode voucher.');
+            return;
+        }
+
+        $this->validate([
+            'voucherCode' => ['required', 'string', 'max:50'],
+        ], [], [
+            'voucherCode' => 'kode voucher',
+        ]);
+
+        $code = strtoupper(trim($this->voucherCode));
+
+        $voucher = Voucher::query()
+            ->where('code', $code)
+            ->first();
+
+        if (! $voucher) {
+            $this->addError('voucherCode', 'Kode voucher tidak ditemukan.');
+            return;
+        }
+
+        $subtotalAmount = $this->currentSubtotalAmount();
+
+        if ($error = $this->voucherError($voucher, $customerId, $subtotalAmount)) {
+            $this->addError('voucherCode', $error);
+            return;
+        }
+
+        $discountAmount = min(
+            $voucher->calculateDiscount($subtotalAmount),
+            max(0, $subtotalAmount - 1)
+        );
+
+        if ($discountAmount <= 0) {
+            $this->addError('voucherCode', 'Voucher tidak menghasilkan potongan.');
+            return;
+        }
+
+        $this->appliedVoucherId = $voucher->id;
+        $this->appliedVoucherCode = $voucher->code;
+        $this->voucherCode = $voucher->code;
+        $this->discountAmount = $discountAmount;
+    }
+
+    public function removeVoucher(): void
+    {
+        $this->clearVoucher();
+    }
+
+    private function currentSubtotalAmount(): int
+    {
+        $gateway = PaymentGateway::ensureMidtrans();
+
+        $selectedProduct = $this->game->products->firstWhere('id', $this->productId);
+
+        $productPrice = (int) ($selectedProduct?->selling_price ?? 0);
+        $adminFee = $this->calculateAdminFee($gateway, $productPrice);
+
+        return $productPrice + $adminFee;
+    }
+
+    private function voucherError(Voucher $voucher, ?int $customerId, int $amount): ?string
+    {
+        if (! $customerId) {
+            return 'Masuk dulu untuk menggunakan kode voucher.';
+        }
+
+        if (! $voucher->isUsableNow()) {
+            return 'Voucher tidak aktif atau sudah berakhir.';
+        }
+
+        if ($amount < (int) $voucher->min_order_amount) {
+            return 'Minimal transaksi untuk voucher ini Rp ' . number_format((int) $voucher->min_order_amount, 0, ',', '.') . '.';
+        }
+
+        if ($voucher->per_customer_limit !== null) {
+            $usedByCustomer = Order::query()
+                ->where('customer_id', $customerId)
+                ->where('voucher_id', $voucher->id)
+                ->whereIn('status', ['pending', 'paid'])
+                ->count();
+
+            if ($usedByCustomer >= $voucher->per_customer_limit) {
+                return 'Voucher ini sudah mencapai batas pemakaian untuk akun kamu.';
+            }
+        }
+
+        return null;
+    }
+
+    private function clearVoucher(): void
+    {
+        $this->voucherCode = '';
+        $this->appliedVoucherId = null;
+        $this->appliedVoucherCode = null;
+        $this->discountAmount = 0;
+        $this->resetErrorBag('voucherCode');
+    }
+
     private function calculateAdminFee(PaymentGateway $gateway, int $productPrice): int
     {
         if ($gateway->fee_type === 'percentage') {
@@ -258,6 +426,16 @@ class CheckoutPage extends Component
 
         $adminFee = $this->calculateAdminFee($gateway, $productPrice);
 
+        $subtotalAmount = $productPrice + $adminFee;
+
+        $discountAmount = $subtotalAmount > 0
+            ? min($this->discountAmount, max(0, $subtotalAmount - 1))
+            : 0;
+
+        $totalAmount = $subtotalAmount > 0
+            ? max(1, $subtotalAmount - $discountAmount)
+            : 0;
+
         return view('livewire.customer.checkout-page', [
             'game' => $this->game,
             'products' => $products,
@@ -266,7 +444,10 @@ class CheckoutPage extends Component
             'selectedGateway' => $selectedGateway,
             'productPrice' => $productPrice,
             'adminFee' => $adminFee,
-            'totalAmount' => $productPrice + $adminFee,
+            'subtotalAmount' => $subtotalAmount,
+            'discountAmount' => $discountAmount,
+            'appliedVoucherCode' => $this->appliedVoucherCode,
+            'totalAmount' => $totalAmount,
         ])->layout('layouts.public', [
             'title' => 'Checkout ' . $this->game->name,
         ]);

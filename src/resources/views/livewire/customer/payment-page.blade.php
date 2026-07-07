@@ -119,6 +119,37 @@
                                     Rp {{ number_format($order->admin_fee, 0, ',', '.') }}
                                 </span>
                             </div>
+
+                            @if ((int) ($order->discount_amount ?? 0) > 0)
+                                <div class="mt-3 flex justify-between gap-4 text-sm">
+                                    <span class="text-slate-500">Subtotal</span>
+                                    <span class="font-bold text-slate-900">
+                                        Rp {{ number_format((int) $order->product_price + (int) $order->admin_fee, 0, ',', '.') }}
+                                    </span>
+                                </div>
+
+                                <div class="mt-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+                                    <div class="flex justify-between gap-4 text-sm">
+                                        <span class="font-bold text-emerald-700">
+                                            Voucher digunakan
+                                        </span>
+
+                                        <span class="font-extrabold text-emerald-700">
+                                            {{ $order->voucher_code ?: '-' }}
+                                        </span>
+                                    </div>
+
+                                    <div class="mt-2 flex justify-between gap-4 text-sm">
+                                        <span class="text-emerald-700">
+                                            Potongan harga
+                                        </span>
+
+                                        <span class="font-extrabold text-emerald-700">
+                                            - Rp {{ number_format((int) $order->discount_amount, 0, ',', '.') }}
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
 
                         <div class="rounded-3xl bg-slate-950 p-5 text-white">

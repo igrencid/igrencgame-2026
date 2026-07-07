@@ -24,3 +24,22 @@ yarn-error.log
 _ide_helper.php
 _ide_helper_models.php
 .env.local.backup
+
+# Local docker/db/env
+db/data/
+.docker-env/
+# Laravel local files
+src/.env
+src/vendor/
+src/node_modules/
+src/public/storage
+src/storage/logs/*.log
+# Backup/temp files
+*.backup
+*.bak
+*.tmp
+# Local env and secrets
+src/.env.local.backup
+# Local data
+# Laravel generated files
+# Backup/temp

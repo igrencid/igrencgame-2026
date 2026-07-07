@@ -54,3 +54,26 @@ Route::get('/orders/{invoice}', OrderStatusPage::class)->name('orders.show');
 
 Route::post('/midtrans/notification', MidtransNotificationController::class)
     ->name('midtrans.notification');
+Route::get('/register', \App\Livewire\Customer\Auth\RegisterPage::class)
+    ->middleware('guest:customer')
+    ->name('customer.register');
+
+Route::get('/login', \App\Livewire\Customer\Auth\LoginPage::class)
+    ->middleware('guest:customer')
+    ->name('customer.login');
+
+Route::post('/logout', function () {
+    \Illuminate\Support\Facades\Auth::guard('customer')->logout();
+
+    request()->session()->regenerateToken();
+
+    return redirect()->route('home');
+})->name('customer.logout');
+
+Route::get('/account', \App\Livewire\Customer\Account\DashboardPage::class)
+    ->middleware('customer.auth')
+    ->name('customer.account');
+
+Route::get('/account/orders', \App\Livewire\Customer\Account\OrdersPage::class)
+    ->middleware('customer.auth')
+    ->name('customer.orders');
