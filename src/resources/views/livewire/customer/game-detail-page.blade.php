@@ -11,7 +11,7 @@
                 class="inline-flex items-center gap-2 text-sm font-bold text-slate-600 transition hover:text-indigo-600"
             >
                 <span>←</span>
-                Kembali ke katalog
+                Kembali ke Katalog
             </a>
 
             <div class="mt-6 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl shadow-indigo-950/5">
@@ -152,7 +152,7 @@
                     <aside class="space-y-4">
                         <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
                             <p class="text-sm font-extrabold text-slate-950">
-                                Data yang dibutuhkan
+                                Data yang Dibutuhkan
                             </p>
 
                             <div class="mt-4 space-y-3">
@@ -182,7 +182,7 @@
                                     </div>
                                 @empty
                                     <div class="rounded-2xl bg-white p-4 text-sm text-slate-500 shadow-sm">
-                                        Belum ada konfigurasi input field.
+                                        Kolom input belum dikonfigurasi.
                                     </div>
                                 @endforelse
                             </div>
@@ -190,11 +190,11 @@
 
                         <div class="rounded-3xl border border-indigo-100 bg-indigo-50 p-5">
                             <p class="text-sm font-extrabold text-indigo-950">
-                                Proses cepat
+                                Proses Cepat
                             </p>
 
                             <p class="mt-2 text-sm leading-6 text-indigo-700">
-                                Setelah memilih nominal, lu akan diarahkan ke checkout untuk mengisi data akun dan memilih pembayaran.
+                                Setelah memilih nominal, Anda akan diarahkan ke halaman checkout untuk mengisi data akun dan memilih metode pembayaran.
                             </p>
                         </div>
                     </aside>
