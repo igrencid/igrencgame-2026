@@ -91,7 +91,7 @@
 
                         <div class="rounded-3xl border border-slate-200 bg-white p-5">
                             <h2 class="text-lg font-extrabold text-slate-950">
-                                Data Pembeli
+                                Data Pemesan
                             </h2>
 
                             <div class="mt-5 space-y-4">

@@ -107,14 +107,14 @@
 
                         <div class="border-t border-slate-200 pt-4">
                             <div class="flex justify-between gap-4 text-sm">
-                                <span class="text-slate-500">Harga produk</span>
+                                <span class="text-slate-500">Harga Produk</span>
                                 <span class="font-bold text-slate-900">
                                     Rp {{ number_format($order->product_price, 0, ',', '.') }}
                                 </span>
                             </div>
 
                             <div class="mt-3 flex justify-between gap-4 text-sm">
-                                <span class="text-slate-500">Biaya admin</span>
+                                <span class="text-slate-500">Biaya Admin</span>
                                 <span class="font-bold text-slate-900">
                                     Rp {{ number_format($order->admin_fee, 0, ',', '.') }}
                                 </span>

@@ -36,7 +36,7 @@
                                 </h1>
 
                                 <p class="mt-1 text-sm text-slate-500">
-                                    Isi data akun dan pilih pembayaran.
+                                    Lengkapi data akun dan pilih metode pembayaran.
                                 </p>
                             </div>
                         </div>
@@ -83,11 +83,11 @@
 
                     <div class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
                         <p class="text-sm font-bold uppercase tracking-wide text-indigo-600">
-                            2. Data Pembeli
+                            2. Data Pemesan
                         </p>
 
                         <h2 class="mt-1 text-xl font-extrabold text-slate-950">
-                            Kontak pesanan
+                            Informasi kontak pesanan
                         </h2>
 
                         <div class="mt-5 grid gap-4 sm:grid-cols-2">
@@ -99,7 +99,7 @@
                                 <input
                                     type="text"
                                     wire:model.defer="customerName"
-                                    placeholder="Nama kamu"
+                                    placeholder="Nama lengkap Anda"
                                     wire:loading.attr="disabled"
                                     wire:target="placeOrder"
                                     class="mt-2 w-full rounded-2xl border-slate-200 bg-white px-4 py-3 text-sm font-medium shadow-sm focus:border-indigo-500 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-slate-100"
@@ -284,11 +284,11 @@
                     @if ($whatsappNumber || $csEmail)
                         <div class="mb-6 rounded-[2rem] border border-blue-200 bg-blue-50 p-6 shadow-sm">
                             <p class="text-sm font-bold text-blue-950">
-                                Bingung isi data akun?
+                                Perlu bantuan mengisi data akun?
                             </p>
 
                             <p class="mt-2 text-sm leading-5 text-blue-900">
-                                Hubungi customer service kami untuk bantuan.
+                                Hubungi layanan pelanggan kami untuk mendapatkan bantuan.
                             </p>
 
                             <div class="mt-4 flex flex-col gap-2">
@@ -298,7 +298,7 @@
                                         target="_blank"
                                         class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-bold text-slate-900 transition hover:bg-slate-100"
                                     >
-                                        Chat CS
+                                        Hubungi Layanan Pelanggan
                                     </a>
                                 @endif
 
@@ -320,7 +320,7 @@
                         </p>
 
                         <h2 class="mt-1 text-xl font-extrabold text-slate-950">
-                            Detail transaksi
+                            Detail Transaksi
                         </h2>
 
                         <div class="mt-5 space-y-4">
@@ -347,14 +347,14 @@
 
                             <div class="border-t border-slate-200 pt-4">
                                 <div class="flex justify-between gap-4 text-sm">
-                                    <span class="text-slate-500">Harga produk</span>
+                                    <span class="text-slate-500">Harga Produk</span>
                                     <span class="font-bold text-slate-900">
                                         Rp {{ number_format($productPrice, 0, ',', '.') }}
                                     </span>
                                 </div>
 
                                 <div class="mt-3 flex justify-between gap-4 text-sm">
-                                    <span class="text-slate-500">Biaya admin</span>
+                                    <span class="text-slate-500">Biaya Admin</span>
                                     <span class="font-bold text-slate-900">
                                         Rp {{ number_format($adminFee, 0, ',', '.') }}
                                     </span>
@@ -476,7 +476,7 @@
                         </button>
 
                         <p class="mt-4 text-center text-xs leading-5 text-slate-500">
-                            Dengan membuat pesanan, transaksi akan dibuat dan diarahkan ke halaman pembayaran.
+                            Dengan membuat pesanan, transaksi akan dibuat dan Anda akan diarahkan ke halaman pembayaran.
                         </p>
                     </div>
                 </aside>
