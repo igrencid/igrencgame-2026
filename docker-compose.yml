@@ -1,10 +1,10 @@
-version: '3.8'
 
 services:
   php:
     build:
       context: ./php
     container_name: ${COMPOSE_PROJECT_NAME}_php
+    restart: unless-stopped
     environment:
       - PROJECT_NAME=${PROJECT_NAME}
       - XDEBUG=${XDEBUG:-false}
@@ -12,15 +12,17 @@ services:
       - ./.docker-env/laravel.env
     volumes:
       - ./src:/var/www/html
-      - ./.docker-env/laravel.env:/var/www/html/.env:ro
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - app_network
 
   nginx:
     build:
       context: ./nginx
     container_name: ${COMPOSE_PROJECT_NAME}_nginx
+    restart: unless-stopped
     ports:
       - "443:443"
       - "80:80"
@@ -30,13 +32,15 @@ services:
       - ./nginx/ssl:/etc/nginx/ssl:ro
     depends_on:
       - php
+    networks:
+      - app_network
 
   db:
     image: mariadb:10.11
     container_name: ${COMPOSE_PROJECT_NAME}_db
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pp455w0rd"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -48,3 +52,9 @@ services:
     volumes:
       - ./db/conf.d:/etc/mysql/conf.d
       - ./db/data:/var/lib/mysql
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
