@@ -12,7 +12,7 @@
                     </h1>
 
                     <p class="mt-3 text-sm text-slate-500">
-                        Nomor faktur:
+                        Invoice:
                         <span class="font-bold text-slate-900">
                             {{ $order->invoice_number }}
                         </span>
@@ -172,7 +172,7 @@
                         <div class="rounded-3xl bg-slate-950 p-5 text-white">
                             <div class="flex items-center justify-between gap-4">
                                 <span class="text-sm font-semibold text-slate-300">
-                                    Total Pembayaran
+                                    Total Pembayaran Pembayaran
                                 </span>
 
                                 <span class="text-2xl font-black">

@@ -54,7 +54,7 @@
                                 </div>
 
                                 <div class="flex justify-between gap-4 text-sm">
-                                    <span class="text-slate-500">Metode Metode Pembayaran</span>
+                                    <span class="text-slate-500">Metode Pembayaran</span>
                                     <span class="text-right font-bold text-slate-900">
                                         {{ $order->paymentGateway?->display_label ?: $order->paymentGateway?->name ?: '-' }}
                                     </span>
@@ -122,7 +122,7 @@
                     <aside class="space-y-5">
                         <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
                             <h2 class="text-lg font-extrabold text-slate-950">
-                                Ringkasan Bayar
+                                Ringkasan Pembayaran
                             </h2>
 
                             <div class="mt-5 space-y-4">
@@ -143,7 +143,7 @@
                                 <div class="rounded-3xl bg-slate-950 p-5 text-white">
                                     <div class="flex items-center justify-between gap-4">
                                         <span class="text-sm font-semibold text-slate-300">
-                                            Total
+                                            Total Pembayaran Pembayaran
                                         </span>
 
                                         <span class="text-xl font-black">
@@ -167,11 +167,11 @@
 
                         <div class="rounded-3xl border border-indigo-100 bg-indigo-50 p-5">
                             <p class="text-sm font-extrabold text-indigo-950">
-                                Status otomatis diperbarui
+                                Status Diperbarui Secara Otomatis
                             </p>
 
                             <p class="mt-2 text-sm leading-6 text-indigo-700">
-                                Halaman ini akan refresh otomatis setiap beberapa detik. Status pembayaran akan benar-benar berubah setelah webhook Midtrans aktif.
+                                Halaman ini akan diperbarui secara otomatis setiap beberapa detik. Status pembayaran akan berubah setelah sistem menerima notifikasi dari Midtrans.
                             </p>
                         </div>
 
@@ -192,7 +192,7 @@
                                 </p>
 
                                 <p class="mt-2 text-sm leading-6 text-amber-900">
-                                    Jika pesanan kamu belum masuk atau ada kendala pembayaran, hubungi customer service kami.
+                                    Jika pesanan Anda belum masuk atau terdapat kendala pembayaran, hubungi layanan pelanggan kami.
                                 </p>
 
                                 <div class="mt-4 flex flex-col gap-2 sm:flex-row">

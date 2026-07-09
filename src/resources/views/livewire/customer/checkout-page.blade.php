@@ -141,7 +141,7 @@
                                 <input
                                     type="email"
                                     wire:model.defer="customerEmail"
-                                    placeholder="email@domain.com"
+                                    placeholder="username@email.com"
                                     wire:loading.attr="disabled"
                                     wire:target="placeOrder"
                                     class="mt-2 w-full rounded-2xl border-slate-200 bg-white px-4 py-3 text-sm font-medium shadow-sm focus:border-indigo-500 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-slate-100"
@@ -442,7 +442,7 @@
                             <div class="rounded-3xl bg-slate-950 p-5 text-white">
                                 <div class="flex items-center justify-between gap-4">
                                     <span class="text-sm font-semibold text-slate-300">
-                                        Total Bayar
+                                        Total Pembayaran Pembayaran
                                     </span>
 
                                     <span class="text-xl font-black">

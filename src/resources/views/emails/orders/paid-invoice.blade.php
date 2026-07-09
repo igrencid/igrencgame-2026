@@ -18,10 +18,10 @@ Metode Pembayaran untuk pesanan kamu sudah berhasil diterima.
 | :--- | :--- |
 | Game | {{ $order->game_name }} |
 | Produk | {{ $order->product_name }} |
-| Metode Metode Pembayaran | {{ $order->paymentGateway?->display_label ?: $order->paymentGateway?->name ?: '-' }} |
+| Metode Pembayaran | {{ $order->paymentGateway?->display_label ?: $order->paymentGateway?->name ?: '-' }} |
 | Harga Produk | Rp {{ number_format($order->product_price, 0, ',', '.') }} |
 | Biaya Admin | Rp {{ number_format($order->admin_fee, 0, ',', '.') }} |
-| Total Bayar | **Rp {{ number_format($order->total_amount, 0, ',', '.') }}** |
+| Total Pembayaran Pembayaran | **Rp {{ number_format($order->total_amount, 0, ',', '.') }}** |
 @endcomponent
 
 @php

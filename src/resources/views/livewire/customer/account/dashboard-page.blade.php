@@ -9,7 +9,7 @@
 
         <div class="grid gap-4 md:grid-cols-3">
             <div class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-                <p class="text-sm text-slate-500">Total Pesanan</p>
+                <p class="text-sm text-slate-500">Total Pembayaran Pesanan</p>
                 <p class="mt-2 text-3xl font-bold text-slate-900">{{ $totalOrders }}</p>
             </div>
 

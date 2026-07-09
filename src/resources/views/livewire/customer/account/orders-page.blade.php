@@ -24,7 +24,7 @@
                             <th class="px-5 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">Invoice</th>
                             <th class="px-5 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">Game</th>
                             <th class="px-5 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">Produk</th>
-                            <th class="px-5 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">Total</th>
+                            <th class="px-5 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">Total Pembayaran</th>
                             <th class="px-5 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">Status</th>
                             <th class="px-5 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">Tanggal</th>
                             <th class="px-5 py-4 text-right text-xs font-bold uppercase tracking-wide text-slate-500">Aksi</th>
