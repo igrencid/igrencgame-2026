@@ -14,16 +14,6 @@
                 </div>
             @endif
 
-            <x-customer.google-auth-button label="Daftar dengan Google" />
-
-            @if (filled(config('services.google.client_id')) && filled(config('services.google.client_secret')) && filled(config('services.google.redirect')))
-                <div class="my-5 flex items-center gap-4">
-                    <div class="h-px flex-1 bg-slate-200"></div>
-                    <span class="text-xs font-bold uppercase tracking-wide text-slate-400">atau</span>
-                    <div class="h-px flex-1 bg-slate-200"></div>
-                </div>
-            @endif
-
             <form wire:submit.prevent="register" class="space-y-5">
                 <div>
                     <label class="text-sm font-semibold text-slate-700">Nama</label>
@@ -33,7 +23,9 @@
                         class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500"
                         placeholder="Nama lengkap"
                     >
-                    @error('name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    @error('name')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
@@ -44,7 +36,9 @@
                         class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500"
                         placeholder="email@example.com"
                     >
-                    @error('email') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    @error('email')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
@@ -55,7 +49,9 @@
                         class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500"
                         placeholder="08xxxxxxxxxx"
                     >
-                    @error('phone') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    @error('phone')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
@@ -66,7 +62,9 @@
                         class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500"
                         placeholder="Minimal 8 karakter"
                     >
-                    @error('password') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    @error('password')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
@@ -95,6 +93,14 @@
                     Daftar Sekarang
                 </button>
             </form>
+
+            <div class="my-5 flex items-center gap-4">
+                <div class="h-px flex-1 bg-slate-200"></div>
+                <span class="text-xs font-bold uppercase tracking-wide text-slate-400">atau</span>
+                <div class="h-px flex-1 bg-slate-200"></div>
+            </div>
+
+            <x-customer.google-auth-button label="Daftar dengan Google" />
 
             <p class="mt-6 text-center text-sm text-slate-500">
                 Sudah punya akun?
