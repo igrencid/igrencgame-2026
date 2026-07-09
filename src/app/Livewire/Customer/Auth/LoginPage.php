@@ -17,6 +17,8 @@ class LoginPage extends Component
 
     public function login()
     {
+        $this->resetErrorBag();
+
         $this->validate([
             'email' => ['required', 'email', 'max:255'],
             'password' => ['required', 'string'],
@@ -27,13 +29,11 @@ class LoginPage extends Component
             'password.required' => 'Kata sandi wajib diisi.',
         ]);
 
-        $credentials = [
+        if (! Auth::guard('customer')->attempt([
             'email' => $this->email,
             'password' => $this->password,
-        ];
-
-        if (! Auth::guard('customer')->attempt($credentials, $this->remember)) {
-            $this->addError('email', 'Email atau kata sandi tidak sesuai.');
+        ], $this->remember)) {
+            $this->addError('auth', 'Email atau kata sandi tidak sesuai.');
 
             return null;
         }

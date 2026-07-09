@@ -2,59 +2,97 @@
     <div class="mx-auto max-w-xl px-4">
         <div class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
             <div class="mb-8">
-                <h1 class="text-2xl font-bold text-slate-900">Masuk Akun Pelanggan</h1>
-                <p class="mt-2 text-sm text-slate-500">
-                    Masuk untuk melihat riwayat pesanan dan mempercepat proses checkout.
+                <h1 class="text-2xl font-black text-slate-950">
+                    Masuk ke Akun Pelanggan
+                </h1>
+
+                <p class="mt-2 text-sm leading-6 text-slate-500">
+                    Kelola riwayat pesanan, pantau status transaksi, dan lanjutkan checkout dengan lebih cepat.
                 </p>
             </div>
 
             @if (session('error'))
-                <div class="mb-5 rounded-2xl bg-rose-50 p-4 text-sm font-semibold text-rose-600">
+                <div
+                    class="mb-5 rounded-2xl border p-4 text-sm font-bold"
+                    style="border-color: #fecaca; background-color: #fef2f2; color: #dc2626;"
+                >
                     {{ session('error') }}
                 </div>
             @endif
 
+            @error('auth')
+                <div
+                    class="mb-5 rounded-2xl border p-4 text-sm font-bold"
+                    style="border-color: #fecaca; background-color: #fef2f2; color: #dc2626;"
+                >
+                    {{ $message }}
+                </div>
+            @enderror
+
             <form wire:submit.prevent="login" class="space-y-5">
                 <div>
-                    <label class="text-sm font-semibold text-slate-700">Email</label>
+                    <label class="text-sm font-bold text-slate-700">
+                        Email
+                    </label>
+
                     <input
                         type="email"
                         wire:model="email"
-                        class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        class="mt-2 w-full rounded-2xl border px-4 py-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-indigo-500 focus:ring-indigo-500"
                         placeholder="username@email.com"
+                        autocomplete="email"
                     >
+
                     @error('email')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm font-bold" style="color: #dc2626;">
+                            {{ $message }}
+                        </p>
                     @enderror
                 </div>
 
                 <div>
-                    <label class="text-sm font-semibold text-slate-700">Password</label>
+                    <label class="text-sm font-bold text-slate-700">
+                        Kata Sandi
+                    </label>
+
                     <input
                         type="password"
                         wire:model="password"
-                        class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        placeholder="Password akun"
+                        class="mt-2 w-full rounded-2xl border px-4 py-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-indigo-500 focus:ring-indigo-500"
+                        placeholder="Masukkan kata sandi akun Anda"
+                        autocomplete="current-password"
                     >
+
                     @error('password')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm font-bold" style="color: #dc2626;">
+                            {{ $message }}
+                        </p>
                     @enderror
                 </div>
 
-                <label class="flex items-center gap-3 text-sm text-slate-600">
+                <label class="flex items-center gap-3 text-sm font-semibold text-slate-600">
                     <input
                         type="checkbox"
                         wire:model="remember"
                         class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
                     >
+
                     <span>Ingat saya</span>
                 </label>
 
                 <button
                     type="submit"
-                    class="w-full rounded-2xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white hover:bg-indigo-700"
+                    wire:loading.attr="disabled"
+                    wire:target="login"
+                    class="inline-flex w-full items-center justify-center rounded-2xl bg-indigo-600 px-5 py-3 text-sm font-extrabold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                    Masuk
+                    <span wire:loading.remove wire:target="login">
+                        Masuk
+                    </span>
+
+                    <span wire:loading wire:target="login">
+                        Memproses...
+                    </span>
                 </button>
             </form>
 
@@ -67,9 +105,9 @@
             <x-customer.google-auth-button label="Masuk dengan Google" />
 
             <p class="mt-6 text-center text-sm text-slate-500">
-                Belum punya akun?
-                <a href="{{ route('customer.register') }}" class="font-semibold text-indigo-600 hover:text-indigo-700">
-                    Daftar
+                Belum memiliki akun?
+                <a href="{{ route('customer.register') }}" class="font-bold text-indigo-600 hover:text-indigo-700">
+                    Daftar sekarang
                 </a>
             </p>
         </div>
