@@ -4,7 +4,7 @@
             <div class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-xl shadow-indigo-950/5 sm:p-8">
                 <div class="text-center">
                     <p class="text-sm font-bold uppercase tracking-wide text-indigo-600">
-                        Pembayaran
+                        Metode Pembayaran
                     </p>
 
                     <h1 class="mt-2 text-2xl font-extrabold text-slate-950 sm:text-3xl">
@@ -61,7 +61,7 @@
 
                 @if ($order->status === 'paid')
                     <div class="mt-6 rounded-3xl border border-emerald-200 bg-emerald-50 p-5 text-sm font-semibold text-emerald-700">
-                        Pembayaran sudah berhasil diterima.
+                        Metode Pembayaran sudah berhasil diterima.
                     </div>
                 @endif
 
@@ -82,7 +82,7 @@
                         </div>
 
                         <div class="flex justify-between gap-4 text-sm">
-                            <span class="text-slate-500">Metode Pembayaran</span>
+                            <span class="text-slate-500">Metode Metode Pembayaran</span>
                             <span class="text-right font-bold text-slate-900">
                                 {{ $order->paymentGateway?->display_label ?: $order->paymentGateway?->name ?: '-' }}
                             </span>

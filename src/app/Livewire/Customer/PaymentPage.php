@@ -42,7 +42,7 @@ class PaymentPage extends Component
             'order' => $this->order,
             'remainingSeconds' => $this->remainingSeconds,
         ])->layout('layouts.public', [
-            'title' => 'Pembayaran ' . $this->order->invoice_number,
+            'title' => 'Metode Pembayaran ' . $this->order->invoice_number,
         ]);
     }
 }

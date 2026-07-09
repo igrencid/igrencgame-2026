@@ -7,7 +7,7 @@
             </h1>
 
             <p class="mx-auto max-w-2xl text-base leading-relaxed text-slate-600 md:text-lg">
-                Temukan jawaban untuk pertanyaan yang sering ditanyakan seputar layanan top up game di IgrencGame.
+                Temukan jawaban untuk pertanyaan yang sering ditanyakan seputar layanan top up game di Igrenc.
             </p>
         </div>
     </section>
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            {{-- FAQ Items --}}
+            {{-- Pertanyaan Umum Items --}}
             @if ($faqs->count() > 0)
                 <div class="space-y-3">
                     @foreach ($faqs as $index => $faq)
@@ -87,18 +87,18 @@
                     </div>
 
                     <h3 class="mb-2 text-lg font-extrabold text-slate-900">
-                        FAQ tidak ditemukan
+                        Pertanyaan Umum tidak ditemukan
                     </h3>
 
                     <p class="mx-auto max-w-md text-sm leading-6 text-slate-600">
-                        Coba gunakan kata kunci lain atau hubungi Customer Service kami melalui informasi kontak di bagian bawah halaman.
+                        Coba gunakan kata kunci lain atau hubungi Layanan Pelanggan kami melalui informasi kontak di bagian bawah halaman.
                     </p>
                 </div>
             @endif
         </div>
     </section>
 
-    {{-- Customer Service CTA --}}
+    {{-- Layanan Pelanggan CTA --}}
     @if ($siteSetting?->customer_service_whatsapp)
         <section class="bg-slate-50 py-8 md:py-12">
             <div class="mx-auto max-w-4xl px-4">
@@ -110,12 +110,12 @@
                             </h3>
 
                             <p class="max-w-2xl text-sm leading-6 text-slate-600 md:text-base">
-                                Tim Customer Service kami siap membantu kendala pembayaran, data akun, dan status pesanan.
+                                Tim Layanan Pelanggan kami siap membantu kendala pembayaran, data akun, dan status pesanan.
                             </p>
                         </div>
 
                         <a
-                            href="https://wa.me/{{ $siteSetting->customer_service_whatsapp }}?text={{ urlencode('Halo admin IgrencGame, saya butuh bantuan terkait pesanan.') }}"
+                            href="https://wa.me/{{ $siteSetting->customer_service_whatsapp }}?text={{ urlencode('Halo admin Igrenc, saya butuh bantuan terkait pesanan.') }}"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="inline-flex items-center justify-center rounded-full border border-slate-200 px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700"

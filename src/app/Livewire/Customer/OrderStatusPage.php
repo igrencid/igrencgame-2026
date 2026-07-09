@@ -21,9 +21,9 @@ class OrderStatusPage extends Component
     public function getStatusLabelProperty(): string
     {
         return match ($this->order->status) {
-            'pending' => 'Menunggu Pembayaran',
+            'pending' => 'Menunggu Metode Pembayaran',
             'paid' => 'Sudah Dibayar',
-            'processing' => 'Sedang Diproses',
+            'processing' => 'Sedang Pesanan Diproses',
             'success' => 'Selesai',
             'failed' => 'Gagal',
             'expired' => 'Kedaluwarsa',

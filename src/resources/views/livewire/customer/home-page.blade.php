@@ -10,15 +10,15 @@
                 <div>
                     <div class="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-white px-4 py-2 text-xs font-bold text-indigo-600 shadow-sm">
                         <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                        Top Up Game Cepat dan Aman
+                        Top Up Game Cepat, Aman, dan Praktis
                     </div>
 
                     <h1 class="mt-6 max-w-2xl text-4xl font-extrabold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
-                        Top up game favorit lu dengan proses yang simpel.
+                        Top up game favorit Anda dengan proses yang mudah, cepat, dan tepercaya.
                     </h1>
 
                     <p class="mt-5 max-w-xl text-base leading-8 text-slate-600 sm:text-lg">
-                        Pilih game, masukkan data akun, pilih nominal, lalu bayar melalui metode pembayaran yang tersedia.
+                        Pilih game, masukkan data akun, tentukan nominal, lalu selesaikan pembayaran melalui metode yang tersedia.
                     </p>
 
                     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -44,11 +44,11 @@
                             <div class="flex items-center justify-between gap-4">
                                 <div>
                                     <p class="text-xs font-semibold text-slate-400">
-                                        Dashboard Layanan
+                                        Ringkasan Layanan
                                     </p>
 
                                     <p class="mt-1 text-xl font-extrabold">
-                                        Sistem IgrencGame
+                                        Sistem Igrenc
                                     </p>
                                 </div>
 
@@ -70,7 +70,7 @@
 
                                 <div class="rounded-2xl bg-indigo-500 p-4">
                                     <p class="text-xs font-semibold text-indigo-100">
-                                        Nominal
+                                        Produk
                                     </p>
 
                                     <p class="mt-2 text-2xl font-extrabold text-white">
@@ -80,7 +80,7 @@
 
                                 <div class="rounded-2xl bg-white/10 p-4">
                                     <p class="text-xs font-semibold text-slate-400">
-                                        Pembayaran
+                                        Metode Pembayaran
                                     </p>
 
                                     <p class="mt-2 text-2xl font-extrabold text-white">
@@ -90,7 +90,7 @@
 
                                 <div class="rounded-2xl bg-white/10 p-4">
                                     <p class="text-xs font-semibold text-slate-400">
-                                        Diproses
+                                        Pesanan Diproses
                                     </p>
 
                                     <p class="mt-2 text-2xl font-extrabold text-white">
@@ -124,11 +124,11 @@
                     </p>
 
                     <h2 class="mt-2 text-2xl font-extrabold text-slate-950 sm:text-3xl">
-                        Pilih game yang mau lu top up
+                        Pilih game yang ingin Anda top up
                     </h2>
 
                     <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
-                        Semua game di bawah ini diambil langsung dari admin panel.
+                        Seluruh game berikut dikelola langsung melalui panel admin.
                     </p>
                 </div>
 
@@ -139,7 +139,7 @@
                         id="search-game"
                         type="text"
                         wire:model.live.debounce.400ms="search"
-                        placeholder="Cari game..."
+                        placeholder="Cari nama game..."
                         class="w-full rounded-2xl border-slate-200 bg-white px-4 py-3 text-sm font-medium shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     >
                 </div>
@@ -213,7 +213,7 @@
                         </p>
 
                         <p class="mt-2 text-sm text-slate-500">
-                            Tambahkan game dari admin panel terlebih dahulu.
+                            Tambahkan game melalui panel admin terlebih dahulu.
                         </p>
                     </div>
                 @endforelse
@@ -230,11 +230,11 @@
                     </p>
 
                     <h2 class="mt-2 text-2xl font-extrabold text-slate-950">
-                        Lihat status pesanan
+                        Lihat Status Pesanan
                     </h2>
 
                     <p class="mt-3 text-sm leading-6 text-slate-600">
-                        Masukkan nomor invoice untuk melihat status transaksi.
+                        Masukkan nomor faktur untuk melihat status transaksi.
                     </p>
                 </div>
 

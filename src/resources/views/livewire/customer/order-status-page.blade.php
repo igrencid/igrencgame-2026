@@ -54,7 +54,7 @@
                                 </div>
 
                                 <div class="flex justify-between gap-4 text-sm">
-                                    <span class="text-slate-500">Metode Pembayaran</span>
+                                    <span class="text-slate-500">Metode Metode Pembayaran</span>
                                     <span class="text-right font-bold text-slate-900">
                                         {{ $order->paymentGateway?->display_label ?: $order->paymentGateway?->name ?: '-' }}
                                     </span>
@@ -188,7 +188,7 @@
                         @if ($whatsappNumber || $csEmail || $csHours)
                             <div class="rounded-3xl border border-amber-200 bg-amber-50 p-5">
                                 <p class="text-sm font-extrabold text-amber-950">
-                                    Butuh Bantuan?
+                                    Perlu Bantuan?
                                 </p>
 
                                 <p class="mt-2 text-sm leading-6 text-amber-900">
@@ -198,7 +198,7 @@
                                 <div class="mt-4 flex flex-col gap-2 sm:flex-row">
                                     @if ($whatsappNumber)
                                         <a
-                                            href="https://wa.me/{{ $whatsappNumber }}?text={{ urlencode('Halo admin IgrencGame, saya butuh bantuan terkait pesanan ' . $order->invoice_number) }}"
+                                            href="https://wa.me/{{ $whatsappNumber }}?text={{ urlencode('Halo admin Igrenc, saya butuh bantuan terkait pesanan ' . $order->invoice_number) }}"
                                             target="_blank"
                                             class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-bold text-slate-900 transition hover:bg-slate-100"
                                         >

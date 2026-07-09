@@ -7,7 +7,7 @@
         ? \App\Models\SiteSetting::current()
         : null;
 
-    $siteName = $siteSetting?->site_name ?: config('app.name', 'IgrencGame');
+    $siteName = $siteSetting?->site_name ?: config('app.name', 'Igrenc');
     $siteTagline = $siteSetting?->tagline ?: 'Fast Game Top Up';
     $siteDescription = $siteSetting?->seo_description ?: 'Platform top up game online cepat, aman, dan mudah digunakan.';
     $siteLogoUrl = $siteSetting?->logo_url;
@@ -17,7 +17,7 @@
     $csEmail = $siteSetting?->customer_service_email;
     $csHours = $siteSetting?->customer_service_working_hours;
 
-    $waMessage = urlencode('Halo admin IgrencGame, saya butuh bantuan terkait pesanan.');
+    $waMessage = urlencode('Halo admin Igrenc, saya butuh bantuan terkait pesanan.');
     $waUrl = $whatsappNumber ? "https://wa.me/{$whatsappNumber}?text={$waMessage}" : null;
 @endphp
 
@@ -250,7 +250,7 @@
                     </div>
 
                     <p class="mt-4 text-sm leading-6 text-slate-400">
-                        Platform top up game online terpercaya, cepat, dan aman untuk kebutuhan game favoritmu.
+                        Platform top up game online yang tepercaya, cepat, dan aman untuk kebutuhan game favorit Anda.
                     </p>
                 </div>
 
@@ -269,7 +269,7 @@
                 </div>
 
                 <div>
-                    <h3 class="text-sm font-extrabold">Butuh Bantuan?</h3>
+                    <h3 class="text-sm font-extrabold">Perlu Bantuan?</h3>
 
                     <div class="mt-4 space-y-3 text-sm text-slate-400">
                         @if ($waUrl)
@@ -284,11 +284,11 @@
                         @endif
 
                         <a href="{{ route('faq.index') }}" class="block transition hover:text-white">
-                            FAQ
+                            Pertanyaan Umum
                         </a>
 
                         <a href="{{ route('terms.show') }}" class="block transition hover:text-white">
-                            Syarat & Ketentuan
+                            Syarat dan Ketentuan
                         </a>
 
                         <a href="{{ route('privacy.show') }}" class="block transition hover:text-white">
@@ -298,7 +298,7 @@
                 </div>
 
                 <div>
-                    <h3 class="text-sm font-extrabold">Customer Service</h3>
+                    <h3 class="text-sm font-extrabold">Layanan Pelanggan</h3>
 
                     <div class="mt-4 space-y-3 text-sm leading-6 text-slate-400">
                         @if ($whatsappNumber || $csEmail || $csHours)
@@ -346,7 +346,7 @@
                                 </div>
                             @endif
                         @else
-                            <p>Data customer service belum tersedia.</p>
+                            <p>Data layanan pelanggan belum tersedia.</p>
                         @endif
                     </div>
                 </div>

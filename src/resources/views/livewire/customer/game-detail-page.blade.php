@@ -86,7 +86,7 @@
                         <div class="flex items-center justify-between gap-4">
                             <div>
                                 <p class="text-sm font-bold uppercase tracking-wide text-indigo-600">
-                                    Nominal Top Up
+                                    Produk Top Up
                                 </p>
 
                                 <h2 class="mt-1 text-2xl font-extrabold text-slate-950">
@@ -138,7 +138,7 @@
                             @empty
                                 <div class="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center sm:col-span-2">
                                     <p class="text-sm font-bold text-slate-700">
-                                        Nominal belum tersedia.
+                                        Produk belum tersedia.
                                     </p>
 
                                     <p class="mt-2 text-sm text-slate-500">

@@ -83,7 +83,7 @@
                         wire:model="accepts_marketing"
                         class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
                     >
-                    <span>Saya bersedia menerima informasi promo dan pembaruan dari IgrencGame.</span>
+                    <span>Saya bersedia menerima informasi promo dan pembaruan dari Igrenc.</span>
                 </label>
 
                 <button

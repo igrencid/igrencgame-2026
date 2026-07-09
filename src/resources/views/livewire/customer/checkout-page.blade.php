@@ -158,7 +158,7 @@
 
                     <div class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
                         <p class="text-sm font-bold uppercase tracking-wide text-indigo-600">
-                            3. Pilih Nominal
+                            3. Pilih Produk
                         </p>
 
                         <h2 class="mt-1 text-xl font-extrabold text-slate-950">
@@ -213,7 +213,7 @@
 
                     <div class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
                         <p class="text-sm font-bold uppercase tracking-wide text-indigo-600">
-                            4. Pembayaran
+                            4. Metode Pembayaran
                         </p>
 
                         <h2 class="mt-1 text-xl font-extrabold text-slate-950">
@@ -339,7 +339,7 @@
                             </div>
 
                             <div class="flex justify-between gap-4 text-sm">
-                                <span class="text-slate-500">Pembayaran</span>
+                                <span class="text-slate-500">Metode Pembayaran</span>
                                 <span class="text-right font-bold text-slate-900">
                                     {{ $selectedGateway?->display_label ?: $selectedGateway?->name ?: '-' }}
                                 </span>
