@@ -39,7 +39,7 @@ class SiteSetting extends Model
                 ->latest('id')
                 ->first()
                 ?? new static([
-                    'site_name' => config('app.name', 'IgrencGame'),
+                    'site_name' => config('app.name', 'Igrenc'),
                     'tagline' => 'Fast Game Top Up',
                     'seo_description' => 'Platform top up game online cepat, aman, dan mudah digunakan.',
                 ]);
