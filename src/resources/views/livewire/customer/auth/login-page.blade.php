@@ -21,7 +21,7 @@
                         type="email"
                         wire:model="email"
                         class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500"
-                        placeholder="email@example.com"
+                        placeholder="username@email.com"
                     >
                     @error('email')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
