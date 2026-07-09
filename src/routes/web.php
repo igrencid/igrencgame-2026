@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Customer\Auth\GoogleAuthController;
 use App\Http\Controllers\Customer\MidtransFinishController;
 use App\Livewire\Customer\CheckoutPage;
 use App\Livewire\Customer\ContentPageShow;
@@ -77,3 +78,13 @@ Route::get('/account', \App\Livewire\Customer\Account\DashboardPage::class)
 Route::get('/account/orders', \App\Livewire\Customer\Account\OrdersPage::class)
     ->middleware('customer.auth')
     ->name('customer.orders');
+
+
+Route::middleware('guest:customer')->group(function () {
+    Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])
+        ->name('customer.google.redirect');
+
+    Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])
+        ->name('customer.google.callback');
+});
+

@@ -2,11 +2,27 @@
     <div class="mx-auto max-w-xl px-4">
         <div class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
             <div class="mb-8">
-                <h1 class="text-2xl font-bold text-slate-900">Masuk Akun Buyer</h1>
+                <h1 class="text-2xl font-bold text-slate-900">Masuk Akun Pelanggan</h1>
                 <p class="mt-2 text-sm text-slate-500">
-                    Login untuk melihat riwayat pesanan dan mempercepat checkout.
+                    Masuk untuk melihat riwayat pesanan dan mempercepat proses checkout.
                 </p>
             </div>
+
+            @if (session('error'))
+                <div class="mb-5 rounded-2xl bg-rose-50 p-4 text-sm font-semibold text-rose-600">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <x-customer.google-auth-button label="Masuk dengan Google" />
+
+            @if (filled(config('services.google.client_id')) && filled(config('services.google.client_secret')) && filled(config('services.google.redirect')))
+                <div class="my-5 flex items-center gap-4">
+                    <div class="h-px flex-1 bg-slate-200"></div>
+                    <span class="text-xs font-bold uppercase tracking-wide text-slate-400">atau</span>
+                    <div class="h-px flex-1 bg-slate-200"></div>
+                </div>
+            @endif
 
             <form wire:submit.prevent="login" class="space-y-5">
                 <div>

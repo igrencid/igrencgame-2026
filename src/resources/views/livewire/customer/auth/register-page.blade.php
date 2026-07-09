@@ -2,11 +2,27 @@
     <div class="mx-auto max-w-xl px-4">
         <div class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm">
             <div class="mb-8">
-                <h1 class="text-2xl font-bold text-slate-900">Daftar Akun Buyer</h1>
+                <h1 class="text-2xl font-bold text-slate-900">Daftar Akun Pelanggan</h1>
                 <p class="mt-2 text-sm text-slate-500">
-                    Buat akun untuk menyimpan riwayat pesanan. Checkout tetap bisa tanpa akun.
+                    Buat akun untuk menyimpan riwayat pesanan. Checkout tetap bisa dilakukan tanpa akun.
                 </p>
             </div>
+
+            @if (session('error'))
+                <div class="mb-5 rounded-2xl bg-rose-50 p-4 text-sm font-semibold text-rose-600">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <x-customer.google-auth-button label="Daftar dengan Google" />
+
+            @if (filled(config('services.google.client_id')) && filled(config('services.google.client_secret')) && filled(config('services.google.redirect')))
+                <div class="my-5 flex items-center gap-4">
+                    <div class="h-px flex-1 bg-slate-200"></div>
+                    <span class="text-xs font-bold uppercase tracking-wide text-slate-400">atau</span>
+                    <div class="h-px flex-1 bg-slate-200"></div>
+                </div>
+            @endif
 
             <form wire:submit.prevent="register" class="space-y-5">
                 <div>
@@ -69,7 +85,7 @@
                         wire:model="accepts_marketing"
                         class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
                     >
-                    <span>Saya bersedia menerima info promo dan update dari IgrencGame.</span>
+                    <span>Saya bersedia menerima informasi promo dan pembaruan dari IgrencGame.</span>
                 </label>
 
                 <button

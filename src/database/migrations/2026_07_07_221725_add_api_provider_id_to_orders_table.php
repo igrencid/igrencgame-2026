@@ -12,7 +12,6 @@ return new class extends Migration
             Schema::table('orders', function (Blueprint $table) {
                 $table->foreignId('api_provider_id')
                     ->nullable()
-                    ->after('customer_id')
                     ->constrained('api_providers')
                     ->nullOnDelete();
             });
