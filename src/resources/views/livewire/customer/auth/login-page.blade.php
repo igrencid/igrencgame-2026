@@ -11,6 +11,14 @@
                 </p>
             </div>
 
+            @if (session('status'))
+                <div
+                    class="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-bold text-emerald-700"
+                >
+                    {{ session('status') }}
+                </div>
+            @endif
+
             @if (session('error'))
                 <div
                     class="mb-5 rounded-2xl border p-4 text-sm font-bold"
@@ -31,31 +39,48 @@
 
             <form wire:submit.prevent="login" class="space-y-5">
                 <div>
-                    <label class="text-sm font-bold text-slate-700">
+                    <label
+                        for="email"
+                        class="text-sm font-bold text-slate-700"
+                    >
                         Email
                     </label>
 
                     <input
+                        id="email"
                         type="email"
                         wire:model="email"
                         class="mt-2 w-full rounded-2xl border px-4 py-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-indigo-500 focus:ring-indigo-500"
-                        placeholder="username@email.com"
+                        placeholder="nama@contoh.com"
                         autocomplete="email"
                     >
 
                     @error('email')
-                        <p class="mt-2 text-sm font-bold" style="color: #dc2626;">
+                        <p class="mt-2 text-sm font-bold text-rose-600">
                             {{ $message }}
                         </p>
                     @enderror
                 </div>
 
                 <div>
-                    <label class="text-sm font-bold text-slate-700">
-                        Kata Sandi
-                    </label>
+                    <div class="flex items-center justify-between gap-4">
+                        <label
+                            for="password"
+                            class="text-sm font-bold text-slate-700"
+                        >
+                            Kata Sandi
+                        </label>
+
+                        <a
+                            href="{{ route('customer.password.request') }}"
+                            class="text-sm font-bold text-indigo-600 transition hover:text-indigo-700"
+                        >
+                            Lupa kata sandi?
+                        </a>
+                    </div>
 
                     <input
+                        id="password"
                         type="password"
                         wire:model="password"
                         class="mt-2 w-full rounded-2xl border px-4 py-3 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-indigo-500 focus:ring-indigo-500"
@@ -64,7 +89,7 @@
                     >
 
                     @error('password')
-                        <p class="mt-2 text-sm font-bold" style="color: #dc2626;">
+                        <p class="mt-2 text-sm font-bold text-rose-600">
                             {{ $message }}
                         </p>
                     @enderror
@@ -98,7 +123,11 @@
 
             <div class="my-5 flex items-center gap-4">
                 <div class="h-px flex-1 bg-slate-200"></div>
-                <span class="text-xs font-bold uppercase tracking-wide text-slate-400">atau</span>
+
+                <span class="text-xs font-bold uppercase tracking-wide text-slate-400">
+                    atau
+                </span>
+
                 <div class="h-px flex-1 bg-slate-200"></div>
             </div>
 
@@ -106,7 +135,11 @@
 
             <p class="mt-6 text-center text-sm text-slate-500">
                 Belum memiliki akun?
-                <a href="{{ route('customer.register') }}" class="font-bold text-indigo-600 hover:text-indigo-700">
+
+                <a
+                    href="{{ route('customer.register') }}"
+                    class="font-bold text-indigo-600 hover:text-indigo-700"
+                >
                     Daftar sekarang
                 </a>
             </p>

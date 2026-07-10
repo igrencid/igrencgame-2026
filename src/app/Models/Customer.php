@@ -2,24 +2,25 @@
 
 namespace App\Models;
 
+use App\Notifications\CustomerResetPasswordNotification;
+use Illuminate\Auth\Passwords\CanResetPassword as CanResetPasswordTrait;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Customer extends Authenticatable
+class Customer extends Authenticatable implements CanResetPasswordContract
 {
+    use HasFactory;
     use Notifiable;
-
-    protected $guard = 'customer';
+    use CanResetPasswordTrait;
 
     protected $fillable = [
         'name',
         'email',
         'phone',
         'password',
-        'google_id',
-        'avatar_url',
-        'email_verified_at',
         'accepts_marketing',
     ];
 
@@ -28,19 +29,23 @@ class Customer extends Authenticatable
         'remember_token',
     ];
 
-    protected $casts = [
-        'password' => 'hashed',
-        'email_verified_at' => 'datetime',
-        'accepts_marketing' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed',
+            'accepts_marketing' => 'boolean',
+        ];
+    }
 
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
 
-    public function hasGoogleAccount(): bool
+    public function sendPasswordResetNotification($token): void
     {
-        return filled($this->google_id);
+        $this->notify(
+            new CustomerResetPasswordNotification((string) $token)
+        );
     }
 }

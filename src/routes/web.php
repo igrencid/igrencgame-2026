@@ -2,6 +2,13 @@
 
 use App\Http\Controllers\Customer\Auth\GoogleAuthController;
 use App\Http\Controllers\Customer\MidtransFinishController;
+use App\Http\Controllers\Customer\MidtransNotificationController;
+use App\Livewire\Customer\Account\DashboardPage;
+use App\Livewire\Customer\Account\OrdersPage;
+use App\Livewire\Customer\Auth\ForgotPasswordPage;
+use App\Livewire\Customer\Auth\LoginPage;
+use App\Livewire\Customer\Auth\RegisterPage;
+use App\Livewire\Customer\Auth\ResetPasswordPage;
 use App\Livewire\Customer\CheckoutPage;
 use App\Livewire\Customer\ContentPageShow;
 use App\Livewire\Customer\FaqPage;
@@ -9,82 +16,127 @@ use App\Livewire\Customer\GameDetailPage;
 use App\Livewire\Customer\HomePage;
 use App\Livewire\Customer\OrderStatusPage;
 use App\Livewire\Customer\PaymentPage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
-use App\Http\Controllers\Customer\MidtransNotificationController;
 
-/* NOTE: Do Not Remove
-/ Livewire asset handling if using sub folder in domain
+/*
+|--------------------------------------------------------------------------
+| Rute Aset Livewire
+|--------------------------------------------------------------------------
+| Digunakan apabila aplikasi berjalan di dalam subdirektori domain.
 */
-
 Livewire::setUpdateRoute(function ($handle) {
-    return Route::post(config('app.asset_prefix') . '/livewire/update', $handle);
+    return Route::post(
+        config('app.asset_prefix') . '/livewire/update',
+        $handle
+    );
 });
 
 Livewire::setScriptRoute(function ($handle) {
-    return Route::get(config('app.asset_prefix') . '/livewire/livewire.js', $handle);
+    return Route::get(
+        config('app.asset_prefix') . '/livewire/livewire.js',
+        $handle
+    );
 });
-/*
-/ END
-*/
 
+/*
+|--------------------------------------------------------------------------
+| Halaman Utama
+|--------------------------------------------------------------------------
+*/
 Route::get('/', HomePage::class)->name('home');
 
-Route::get('/games/{slug}', GameDetailPage::class)->name('games.show');
-Route::get('/checkout/{slug}', CheckoutPage::class)->name('checkout.show');
+Route::get('/games/{slug}', GameDetailPage::class)
+    ->name('games.show');
+
+Route::get('/checkout/{slug}', CheckoutPage::class)
+    ->name('checkout.show');
 
 /*
 |--------------------------------------------------------------------------
-| Public Content Pages
+| Halaman Informasi
 |--------------------------------------------------------------------------
 */
-Route::get('/faq', FaqPage::class)->name('faq.index');
-Route::get('/terms', ContentPageShow::class)->defaults('slug', 'terms')->name('terms.show');
-Route::get('/privacy', ContentPageShow::class)->defaults('slug', 'privacy')->name('privacy.show');
+Route::get('/faq', FaqPage::class)
+    ->name('faq.index');
+
+Route::get('/terms', ContentPageShow::class)
+    ->defaults('slug', 'terms')
+    ->name('terms.show');
+
+Route::get('/privacy', ContentPageShow::class)
+    ->defaults('slug', 'privacy')
+    ->name('privacy.show');
 
 /*
 |--------------------------------------------------------------------------
-| Midtrans Finish Redirect
+| Pembayaran dan Pesanan
 |--------------------------------------------------------------------------
-| Harus di atas /payment/{invoice}, biar "finish" tidak kebaca sebagai invoice.
+| Rute finish harus berada di atas /payment/{invoice} agar kata "finish"
+| tidak dianggap sebagai nomor invoice.
 */
-Route::get('/payment/finish', MidtransFinishController::class)->name('payment.finish');
+Route::get('/payment/finish', MidtransFinishController::class)
+    ->name('payment.finish');
 
-Route::get('/payment/{invoice}', PaymentPage::class)->name('payment.show');
-Route::get('/orders/{invoice}', OrderStatusPage::class)->name('orders.show');
+Route::get('/payment/{invoice}', PaymentPage::class)
+    ->name('payment.show');
+
+Route::get('/orders/{invoice}', OrderStatusPage::class)
+    ->name('orders.show');
 
 Route::post('/midtrans/notification', MidtransNotificationController::class)
     ->name('midtrans.notification');
-Route::get('/register', \App\Livewire\Customer\Auth\RegisterPage::class)
-    ->middleware('guest:customer')
-    ->name('customer.register');
 
-Route::get('/login', \App\Livewire\Customer\Auth\LoginPage::class)
-    ->middleware('guest:customer')
-    ->name('customer.login');
-
-Route::post('/logout', function () {
-    \Illuminate\Support\Facades\Auth::guard('customer')->logout();
-
-    request()->session()->regenerateToken();
-
-    return redirect()->route('home');
-})->name('customer.logout');
-
-Route::get('/account', \App\Livewire\Customer\Account\DashboardPage::class)
-    ->middleware('customer.auth')
-    ->name('customer.account');
-
-Route::get('/account/orders', \App\Livewire\Customer\Account\OrdersPage::class)
-    ->middleware('customer.auth')
-    ->name('customer.orders');
-
-
+/*
+|--------------------------------------------------------------------------
+| Autentikasi Pelanggan
+|--------------------------------------------------------------------------
+*/
 Route::middleware('guest:customer')->group(function () {
-    Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])
-        ->name('customer.google.redirect');
+    Route::get('/register', RegisterPage::class)
+        ->name('customer.register');
 
-    Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])
-        ->name('customer.google.callback');
+    Route::get('/login', LoginPage::class)
+        ->name('customer.login');
+
+    Route::get('/lupa-kata-sandi', ForgotPasswordPage::class)
+        ->name('customer.password.request');
+
+    Route::get(
+        '/atur-ulang-kata-sandi/{token}',
+        ResetPasswordPage::class
+    )->name('customer.password.reset');
+
+    Route::get('/auth/google/redirect', [
+        GoogleAuthController::class,
+        'redirect',
+    ])->name('customer.google.redirect');
+
+    Route::get('/auth/google/callback', [
+        GoogleAuthController::class,
+        'callback',
+    ])->name('customer.google.callback');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Akun Pelanggan
+|--------------------------------------------------------------------------
+*/
+Route::middleware('customer.auth')->group(function () {
+    Route::get('/account', DashboardPage::class)
+        ->name('customer.account');
+
+    Route::get('/account/orders', OrdersPage::class)
+        ->name('customer.orders');
+
+    Route::post('/logout', function () {
+        Auth::guard('customer')->logout();
+
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect()->route('home');
+    })->name('customer.logout');
+});
