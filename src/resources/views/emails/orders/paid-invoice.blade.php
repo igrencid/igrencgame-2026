@@ -5,6 +5,10 @@
     <title>Invoice Pembayaran - {{ $order->invoice_number }}</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: Arial, sans-serif; color: #0f172a;">
+    @php
+        $brandName = config('brand.name', 'Igrenc');
+    @endphp
+
     <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8fafc; padding: 32px 16px;">
         <tr>
             <td align="center">
@@ -12,7 +16,7 @@
                     <tr>
                         <td style="padding: 32px; background-color: #111827; color: #ffffff;">
                             <div style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em;">
-                                Igrenc
+                                {{ $brandName }}
                             </div>
 
                             <div style="margin-top: 6px; font-size: 13px; font-weight: 700; color: #c7d2fe; text-transform: uppercase; letter-spacing: 0.08em;">
@@ -37,27 +41,21 @@
 
                             <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 24px; border-collapse: collapse;">
                                 <tr>
-                                    <td style="padding: 12px 0; font-size: 14px; color: #64748b;">
-                                        Invoice
-                                    </td>
+                                    <td style="padding: 12px 0; font-size: 14px; color: #64748b;">Invoice</td>
                                     <td align="right" style="padding: 12px 0; font-size: 14px; font-weight: 700; color: #0f172a;">
                                         {{ $order->invoice_number }}
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td style="padding: 12px 0; font-size: 14px; color: #64748b; border-top: 1px solid #e2e8f0;">
-                                        Status
-                                    </td>
+                                    <td style="padding: 12px 0; font-size: 14px; color: #64748b; border-top: 1px solid #e2e8f0;">Status</td>
                                     <td align="right" style="padding: 12px 0; font-size: 14px; font-weight: 700; color: #059669; border-top: 1px solid #e2e8f0;">
                                         Sudah Dibayar
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td style="padding: 12px 0; font-size: 14px; color: #64748b; border-top: 1px solid #e2e8f0;">
-                                        Tanggal Pembayaran
-                                    </td>
+                                    <td style="padding: 12px 0; font-size: 14px; color: #64748b; border-top: 1px solid #e2e8f0;">Tanggal Pembayaran</td>
                                     <td align="right" style="padding: 12px 0; font-size: 14px; font-weight: 700; color: #0f172a; border-top: 1px solid #e2e8f0;">
                                         {{ $order->paid_at?->format('d M Y H:i') ?: '-' }}
                                     </td>
@@ -70,12 +68,8 @@
 
                             <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden;">
                                 <tr>
-                                    <td style="padding: 14px 16px; background-color: #f8fafc; font-size: 13px; font-weight: 700; color: #475569;">
-                                        Keterangan
-                                    </td>
-                                    <td align="right" style="padding: 14px 16px; background-color: #f8fafc; font-size: 13px; font-weight: 700; color: #475569;">
-                                        Detail
-                                    </td>
+                                    <td style="padding: 14px 16px; background-color: #f8fafc; font-size: 13px; font-weight: 700; color: #475569;">Keterangan</td>
+                                    <td align="right" style="padding: 14px 16px; background-color: #f8fafc; font-size: 13px; font-weight: 700; color: #475569;">Detail</td>
                                 </tr>
 
                                 <tr>
@@ -140,18 +134,14 @@
 
                                 <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden;">
                                     <tr>
-                                        <td style="padding: 14px 16px; background-color: #f8fafc; font-size: 13px; font-weight: 700; color: #475569;">
-                                            Kolom
-                                        </td>
-                                        <td align="right" style="padding: 14px 16px; background-color: #f8fafc; font-size: 13px; font-weight: 700; color: #475569;">
-                                            Nilai
-                                        </td>
+                                        <td style="padding: 14px 16px; background-color: #f8fafc; font-size: 13px; font-weight: 700; color: #475569;">Kolom</td>
+                                        <td align="right" style="padding: 14px 16px; background-color: #f8fafc; font-size: 13px; font-weight: 700; color: #475569;">Nilai</td>
                                     </tr>
 
                                     @foreach ($order->customer_inputs as $label => $value)
                                         <tr>
                                             <td style="padding: 14px 16px; font-size: 14px; color: #64748b; border-top: 1px solid #e2e8f0;">
-                                                {{ str_replace(['User ID', 'User id'], 'User ID', $label) }}
+                                                {{ str_replace(['User Id', 'User id'], 'User ID', $label) }}
                                             </td>
                                             <td align="right" style="padding: 14px 16px; font-size: 14px; font-weight: 700; color: #0f172a; border-top: 1px solid #e2e8f0;">
                                                 {{ $value ?: '-' }}
@@ -171,14 +161,14 @@
                             </div>
 
                             <p style="margin: 28px 0 0; font-size: 14px; line-height: 1.7; color: #64748b;">
-                                Terima kasih telah menggunakan Igrenc. Kami akan memproses pesanan Anda sesuai status pembayaran yang telah diterima.
+                                Terima kasih telah menggunakan {{ $brandName }}. Pesanan Anda akan diproses sesuai status pembayaran yang telah diterima.
                             </p>
                         </td>
                     </tr>
                 </table>
 
                 <p style="margin: 18px 0 0; font-size: 12px; color: #94a3b8;">
-                    © {{ now()->year }} Igrenc. Semua hak dilindungi.
+                    © {{ now()->year }} {{ $brandName }}. Semua hak dilindungi.
                 </p>
             </td>
         </tr>

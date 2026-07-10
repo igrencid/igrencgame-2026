@@ -8,3 +8,25 @@
 .grid-image .filepond--item {
     width: calc(33.3% - 0.5em);
 }
+
+/* Admin Igrenc: tampilan login */
+.fi-simple-layout {
+    background:
+        radial-gradient(circle at top left, rgba(79, 70, 229, 0.16), transparent 34rem),
+        linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+}
+
+.fi-simple-main {
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 2rem;
+    box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
+}
+
+.fi-logo {
+    margin-bottom: 0.75rem;
+}
+
+.fi-btn {
+    border-radius: 1rem;
+    font-weight: 800;
+}
