@@ -3,6 +3,7 @@
 use App\Http\Controllers\Customer\Auth\GoogleAuthController;
 use App\Http\Controllers\Customer\MidtransFinishController;
 use App\Http\Controllers\Customer\MidtransNotificationController;
+use App\Livewire\Customer\PromoPage;
 use App\Livewire\Customer\Account\DashboardPage;
 use App\Livewire\Customer\Account\OrdersPage;
 use App\Livewire\Customer\Auth\ForgotPasswordPage;
@@ -14,8 +15,10 @@ use App\Livewire\Customer\ContentPageShow;
 use App\Livewire\Customer\FaqPage;
 use App\Livewire\Customer\GameDetailPage;
 use App\Livewire\Customer\HomePage;
+use App\Livewire\Customer\OrderLookupPage;
 use App\Livewire\Customer\OrderStatusPage;
 use App\Livewire\Customer\PaymentPage;
+use App\Livewire\Customer\TopUpPage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
@@ -53,13 +56,21 @@ Route::get('/games/{slug}', GameDetailPage::class)
 Route::get('/checkout/{slug}', CheckoutPage::class)
     ->name('checkout.show');
 
+Route::get('/top-up', TopUpPage::class)
+    ->name('topup.index');
+
+Route::get('/cek-pesanan', OrderLookupPage::class)
+    ->name('orders.lookup');
+
 /*
 |--------------------------------------------------------------------------
 | Halaman Informasi
 |--------------------------------------------------------------------------
 */
-Route::get('/faq', FaqPage::class)
+Route::get('/bantuan', FaqPage::class)
     ->name('faq.index');
+
+Route::redirect('/faq', '/bantuan');
 
 Route::get('/terms', ContentPageShow::class)
     ->defaults('slug', 'terms')
@@ -140,3 +151,6 @@ Route::middleware('customer.auth')->group(function () {
         return redirect()->route('home');
     })->name('customer.logout');
 });
+
+Route::get('/promo', PromoPage::class)
+    ->name('promo.index');

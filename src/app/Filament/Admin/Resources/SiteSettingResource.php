@@ -42,6 +42,7 @@ class SiteSettingResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make('Brand Website')
+                    ->description('Identitas website yang dipakai pada halaman publik dan panel admin.')
                     ->schema([
                         Forms\Components\TextInput::make('site_name')
                             ->label('Nama Website')
@@ -65,6 +66,7 @@ class SiteSettingResource extends Resource
                     ->columns(2),
 
                 Forms\Components\Section::make('Logo dan Favicon')
+                    ->description('Logo digunakan pada navbar, intro website, dan panel admin.')
                     ->schema([
                         Forms\Components\FileUpload::make('logo_path')
                             ->label('Logo Website')
@@ -81,7 +83,7 @@ class SiteSettingResource extends Resource
                             ->imagePreviewHeight('140')
                             ->openable()
                             ->downloadable()
-                            ->helperText('Upload PNG transparan. Rekomendasi rasio 1:1, minimal 512x512.'),
+                            ->helperText('Gunakan PNG transparan atau WebP. Rekomendasi minimal 512 × 512 piksel.'),
 
                         Forms\Components\FileUpload::make('favicon_path')
                             ->label('Favicon')
@@ -99,22 +101,50 @@ class SiteSettingResource extends Resource
                             ->imagePreviewHeight('80')
                             ->openable()
                             ->downloadable()
-                            ->helperText('Rekomendasi ukuran 64x64 atau 128x128. Pakai emblem sederhana.'),
+                            ->helperText('Rekomendasi ukuran 64 × 64 atau 128 × 128 piksel.'),
                     ])
                     ->columns(2),
 
+                Forms\Components\Section::make('Slider Hero Homepage')
+                    ->description('Upload maksimal 5 gambar. Urutan gambar dapat diubah dengan drag and drop.')
+                    ->schema([
+                        Forms\Components\FileUpload::make('hero_images')
+                            ->label('Gambar Slider Hero')
+                            ->disk('public')
+                            ->directory('site/hero')
+                            ->visibility('public')
+                            ->image()
+                            ->multiple()
+                            ->maxFiles(5)
+                            ->reorderable()
+                            ->appendFiles()
+                            ->imageEditor()
+                            ->acceptedFileTypes([
+                                'image/png',
+                                'image/jpeg',
+                                'image/webp',
+                            ])
+                            ->maxSize(6144)
+                            ->imagePreviewHeight('220')
+                            ->panelLayout('grid')
+                            ->openable()
+                            ->downloadable()
+                            ->helperText('Maksimal 5 gambar. Rekomendasi ukuran 1200 × 900 piksel, rasio 4:3, format WebP.')
+                            ->columnSpanFull(),
+                    ]),
+
                 Forms\Components\Section::make('Customer Service')
-                    ->description('Atur kontak customer service yang akan ditampilkan di public website.')
+                    ->description('Kontak customer service yang ditampilkan pada website publik.')
                     ->schema([
                         Forms\Components\TextInput::make('customer_service_whatsapp')
                             ->label('Nomor WhatsApp CS')
                             ->placeholder('6285813295317')
-                            ->helperText('Gunakan format internasional tanpa tanda +, contoh 6285813295317')
+                            ->helperText('Gunakan format internasional tanpa tanda +.')
                             ->maxLength(20),
 
                         Forms\Components\TextInput::make('customer_service_email')
                             ->label('Email Customer Service')
-                            ->type('email')
+                            ->email()
                             ->placeholder('support@igrencgame.test')
                             ->maxLength(100),
 
@@ -144,6 +174,14 @@ class SiteSettingResource extends Resource
                 Tables\Columns\TextColumn::make('site_name')
                     ->label('Nama Website')
                     ->searchable(),
+
+                Tables\Columns\TextColumn::make('hero_images')
+                    ->label('Slider Hero')
+                    ->formatStateUsing(
+                        fn (mixed $state): string => count((array) $state) . ' gambar'
+                    )
+                    ->badge()
+                    ->color('info'),
 
                 Tables\Columns\TextColumn::make('tagline')
                     ->label('Tagline')

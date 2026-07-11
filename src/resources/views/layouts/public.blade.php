@@ -86,17 +86,21 @@
                     </div>
                 </a>
 
-                <nav class="hidden items-center gap-8 md:flex">
-                    <a href="{{ route('home') }}" class="text-sm font-bold text-slate-700 transition hover:text-indigo-600">
+                <nav class="hidden items-center gap-8 md:flex" aria-label="Navigasi utama">
+                    <a href="{{ route('home') }}" class="text-sm font-bold transition hover:text-indigo-600 {{ request()->routeIs('home') ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1' : 'text-slate-700' }}" aria-current="{{ request()->routeIs('home') ? 'page' : '' }}">
                         Beranda
                     </a>
 
-                    <a href="{{ route('home') }}#games" class="text-sm font-bold text-slate-700 transition hover:text-indigo-600">
+                    <a href="{{ route('topup.index') }}" class="text-sm font-bold transition hover:text-indigo-600 {{ request()->routeIs('topup.index') ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1' : 'text-slate-700' }}" aria-current="{{ request()->routeIs('topup.index') ? 'page' : '' }}">
                         Top Up Game
                     </a>
 
-                    <a href="{{ route('home') }}#cek-pesanan" class="text-sm font-bold text-slate-700 transition hover:text-indigo-600">
+                    <a href="{{ route('orders.lookup') }}" class="text-sm font-bold transition hover:text-indigo-600 {{ request()->routeIs('orders.lookup') ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1' : 'text-slate-700' }}" aria-current="{{ request()->routeIs('orders.lookup') ? 'page' : '' }}">
                         Cek Pesanan
+                    </a>
+
+                    <a href="{{ route('faq.index') }}" class="text-sm font-bold transition hover:text-indigo-600 {{ request()->routeIs('faq.index') ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1' : 'text-slate-700' }}" aria-current="{{ request()->routeIs('faq.index') ? 'page' : '' }}">
+                        Bantuan
                     </a>
                 </nav>
 
@@ -164,17 +168,21 @@
                 x-cloak
                 class="border-t border-slate-200 bg-white px-4 py-4 md:hidden"
             >
-                <div class="mx-auto flex max-w-7xl flex-col gap-2">
-                    <a href="{{ route('home') }}" class="rounded-2xl px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100 hover:text-indigo-600">
+                <div class="mx-auto flex max-w-7xl flex-col gap-2" aria-label="Navigasi seluler">
+                    <a href="{{ route('home') }}" class="rounded-2xl px-3 py-2.5 text-sm font-bold {{ request()->routeIs('home') ? 'bg-slate-100 text-indigo-600' : 'text-slate-700' }} transition hover:bg-slate-100 hover:text-indigo-600" aria-current="{{ request()->routeIs('home') ? 'page' : '' }}">
                         Beranda
                     </a>
 
-                    <a href="{{ route('home') }}#games" class="rounded-2xl px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100 hover:text-indigo-600">
+                    <a href="{{ route('topup.index') }}" class="rounded-2xl px-3 py-2.5 text-sm font-bold {{ request()->routeIs('topup.index') ? 'bg-slate-100 text-indigo-600' : 'text-slate-700' }} transition hover:bg-slate-100 hover:text-indigo-600" aria-current="{{ request()->routeIs('topup.index') ? 'page' : '' }}">
                         Top Up Game
                     </a>
 
-                    <a href="{{ route('home') }}#cek-pesanan" class="rounded-2xl px-3 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100 hover:text-indigo-600">
+                    <a href="{{ route('orders.lookup') }}" class="rounded-2xl px-3 py-2.5 text-sm font-bold {{ request()->routeIs('orders.lookup') ? 'bg-slate-100 text-indigo-600' : 'text-slate-700' }} transition hover:bg-slate-100 hover:text-indigo-600" aria-current="{{ request()->routeIs('orders.lookup') ? 'page' : '' }}">
                         Cek Pesanan
+                    </a>
+
+                    <a href="{{ route('faq.index') }}" class="rounded-2xl px-3 py-2.5 text-sm font-bold {{ request()->routeIs('faq.index') ? 'bg-slate-100 text-indigo-600' : 'text-slate-700' }} transition hover:bg-slate-100 hover:text-indigo-600" aria-current="{{ request()->routeIs('faq.index') ? 'page' : '' }}">
+                        Bantuan
                     </a>
 
                     <div class="my-2 border-t border-slate-200"></div>
@@ -258,11 +266,11 @@
                     <h3 class="text-sm font-extrabold">Produk</h3>
 
                     <div class="mt-4 space-y-3 text-sm text-slate-400">
-                        <a href="{{ route('home') }}#games" class="block transition hover:text-white">
+                        <a href="{{ route('topup.index') }}" class="block transition hover:text-white">
                             Lihat Semua Game
                         </a>
 
-                        <a href="{{ route('home') }}#cek-pesanan" class="block transition hover:text-white">
+                        <a href="{{ route('orders.lookup') }}" class="block transition hover:text-white">
                             Cek Pesanan
                         </a>
                     </div>

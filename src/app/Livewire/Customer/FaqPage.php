@@ -18,7 +18,7 @@ class FaqPage extends Component
         $this->resetPage();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         $faqs = FaqItem::active()
             ->search($this->search)
@@ -32,6 +32,8 @@ class FaqPage extends Component
         return view('livewire.customer.faq-page', [
             'faqs' => $faqs,
             'siteSetting' => $siteSetting,
+        ])->layout('layouts.public', [
+            'title' => 'Bantuan',
         ]);
     }
 }

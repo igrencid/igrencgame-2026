@@ -1,258 +1,213 @@
-<div>
-    <section class="relative overflow-hidden bg-gradient-to-b from-indigo-50 via-white to-slate-50">
-        <div class="absolute inset-0 -z-10">
-            <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-indigo-300/30 blur-3xl"></div>
-            <div class="absolute right-0 top-20 h-72 w-72 rounded-full bg-violet-300/30 blur-3xl"></div>
-        </div>
+<div class="bg-white text-slate-950">
+    {{-- INTRO SCREEN --}}
+    <x-intro-screen />
 
-        <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
-            <div class="grid items-center gap-10 lg:grid-cols-2">
-                <div>
-                    <div class="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-white px-4 py-2 text-xs font-bold text-indigo-600 shadow-sm">
-                        <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                        Top Up Game Cepat, Aman, dan Praktis
-                    </div>
+    {{-- HERO --}}
+<section class="relative overflow-hidden border-b border-slate-200 bg-slate-50">
+    <div class="pointer-events-none absolute inset-0">
+        <div class="absolute -left-40 -top-40 h-[440px] w-[440px] rounded-full bg-indigo-200/35 blur-3xl"></div>
+        <div class="absolute -right-40 top-20 h-[440px] w-[440px] rounded-full bg-violet-200/25 blur-3xl"></div>
+    </div>
 
-                    <h1 class="mt-6 max-w-2xl text-4xl font-extrabold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
-                        Top up game favorit Anda dengan proses yang mudah, cepat, dan tepercaya.
-                    </h1>
+    <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+        <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
 
-                    <p class="mt-5 max-w-xl text-base leading-8 text-slate-600 sm:text-lg">
-                        Pilih game, masukkan data akun, tentukan nominal, lalu selesaikan pembayaran melalui metode yang tersedia.
-                    </p>
+            {{-- HERO CONTENT --}}
+            <div class="max-w-2xl">
+                <div class="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-white px-4 py-2 shadow-sm">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
 
-                    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                        <a
-                            href="#games"
-                            class="inline-flex items-center justify-center rounded-2xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition hover:-translate-y-0.5 hover:bg-indigo-700"
-                        >
-                            Mulai Top Up
-                        </a>
-
-                        <a
-                            href="#cek-pesanan"
-                            class="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-6 py-3 text-sm font-bold text-slate-700 transition hover:-translate-y-0.5 hover:border-indigo-200 hover:text-indigo-600"
-                        >
-                            Cek Pesanan
-                        </a>
-                    </div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">
+                        Top Up Game Cepat dan Aman
+                    </span>
                 </div>
 
-                <div class="relative">
-                    <div class="rounded-[2rem] border border-slate-200 bg-white p-4 shadow-2xl shadow-indigo-950/10">
-                        <div class="rounded-[1.5rem] bg-slate-950 p-5 text-white">
-                            <div class="flex items-center justify-between gap-4">
-                                <div>
-                                    <p class="text-xs font-semibold text-slate-400">
-                                        Ringkasan Layanan
-                                    </p>
+                <h1 class="mt-6 text-4xl font-black leading-[1.08] tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+                    Top up game favorit Anda,
+                    <span class="block bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent">
+                        lebih cepat dan praktis.
+                    </span>
+                </h1>
 
-                                    <p class="mt-1 text-xl font-extrabold">
-                                        Sistem Igrenc
-                                    </p>
-                                </div>
+                <p class="mt-6 max-w-xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+                    Pilih game, tentukan produk, lalu selesaikan pembayaran.
+                    Pesanan dapat dipantau dengan mudah melalui sistem Igrenc.
+                </p>
 
-                                <div class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-300">
-                                    Aktif
-                                </div>
-                            </div>
+                <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                    <a
+                        href="{{ route('topup.index') }}"
+                        wire:navigate
+                        class="inline-flex min-h-12 items-center justify-center rounded-xl bg-indigo-600 px-7 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition hover:-translate-y-0.5 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-100"
+                    >
+                        Top Up Sekarang
+                    </a>
 
-                            <div class="mt-6 grid grid-cols-2 gap-3">
-                                <div class="rounded-2xl bg-white/10 p-4">
-                                    <p class="text-xs font-semibold text-slate-400">
-                                        Game Aktif
-                                    </p>
+                    <a
+                        href="{{ route('orders.lookup') }}"
+                        wire:navigate
+                        class="inline-flex min-h-12 items-center justify-center rounded-xl border border-slate-300 bg-white px-7 py-3 text-sm font-bold text-slate-700 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-100"
+                    >
+                        Cek Pesanan
+                    </a>
 
-                                    <p class="mt-2 text-2xl font-extrabold text-white">
-                                        {{ number_format($stats['active_games']) }}
-                                    </p>
-                                </div>
-
-                                <div class="rounded-2xl bg-indigo-500 p-4">
-                                    <p class="text-xs font-semibold text-indigo-100">
-                                        Produk
-                                    </p>
-
-                                    <p class="mt-2 text-2xl font-extrabold text-white">
-                                        {{ number_format($stats['active_products']) }}
-                                    </p>
-                                </div>
-
-                                <div class="rounded-2xl bg-white/10 p-4">
-                                    <p class="text-xs font-semibold text-slate-400">
-                                        Metode Pembayaran
-                                    </p>
-
-                                    <p class="mt-2 text-2xl font-extrabold text-white">
-                                        {{ number_format($stats['active_payment_gateways']) }}
-                                    </p>
-                                </div>
-
-                                <div class="rounded-2xl bg-white/10 p-4">
-                                    <p class="text-xs font-semibold text-slate-400">
-                                        Pesanan Diproses
-                                    </p>
-
-                                    <p class="mt-2 text-2xl font-extrabold text-white">
-                                        {{ number_format($stats['processing_orders']) }}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="mt-4 rounded-2xl bg-white p-4 text-slate-950">
-                                <p class="text-xs font-bold text-slate-500">
-                                    Status Sistem
-                                </p>
-
-                                <p class="mt-1 text-lg font-extrabold text-emerald-600">
-                                    Siap menerima pesanan
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <a
+                        href="{{ route('promo.index') }}"
+                        wire:navigate
+                        class="inline-flex min-h-12 items-center justify-center rounded-xl border border-indigo-200 bg-indigo-50 px-7 py-3 text-sm font-bold text-indigo-700 transition hover:border-indigo-300 hover:bg-indigo-100 focus:outline-none focus:ring-4 focus:ring-indigo-100"
+                    >
+                        Lihat Promo
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section id="games" class="bg-slate-50 py-12 sm:py-16">
+            {{-- HERO SLIDER --}}
+            <x-hero-slider />
+
+        </div>
+    </div>
+</section>
+
+{{-- KATALOG GAME --}}
+    <section id="games" class="bg-white py-14 sm:py-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-                <div>
-                    <p class="text-sm font-bold uppercase tracking-wide text-indigo-600">
+            <div class="flex flex-col gap-6 border-b border-slate-200 pb-8 sm:flex-row sm:items-end sm:justify-between">
+                <div class="max-w-2xl">
+                    <p class="text-xs font-bold uppercase tracking-[0.14em] text-indigo-600">
                         Katalog Game
                     </p>
 
-                    <h2 class="mt-2 text-2xl font-extrabold text-slate-950 sm:text-3xl">
+                    <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
                         Pilih game yang ingin Anda top up
                     </h2>
 
-                    <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
-                        Seluruh game berikut dikelola langsung melalui panel admin.
+                    <p class="mt-3 text-base leading-7 text-slate-600">
+                        Temukan game favorit Anda dan lanjutkan ke pilihan produk
+                        yang tersedia.
                     </p>
                 </div>
 
-                <div class="w-full md:max-w-sm">
-                    <label class="sr-only" for="search-game">Cari game</label>
-
-                    <input
-                        id="search-game"
-                        type="text"
-                        wire:model.live.debounce.400ms="search"
-                        placeholder="Cari nama game..."
-                        class="w-full rounded-2xl border-slate-200 bg-white px-4 py-3 text-sm font-medium shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    >
-                </div>
+                <a
+                    href="{{ route('topup.index') }}"
+                    wire:navigate
+                    class="inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-100"
+                >
+                    Lihat Semua Game
+                </a>
             </div>
 
-            <div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-                @forelse ($games as $game)
-                    <a
-                        href="{{ route('games.show', $game->slug) }}"
-                        class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-950/10"
-                    >
-                        <div class="aspect-[4/5] bg-slate-100">
-                            @if ($game->image_path)
-                                <img
-                                    src="{{ asset('storage/' . $game->image_path) }}"
-                                    alt="{{ $game->name }}"
-                                    class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                                >
-                            @else
-                                <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-100 to-indigo-100">
-                                    <div class="flex h-16 w-16 items-center justify-center rounded-3xl bg-white text-indigo-600 shadow-sm">
-                                        <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none">
-                                            <path
-                                                d="M8 13H6m1-1v2m9-1h.01M18 15h.01M7.2 18h9.6c2.2 0 4-1.8 4-4v-2c0-2.2-1.8-4-4-4H7.2c-2.2 0-4 1.8-4 4v2c0 2.2 1.8 4 4 4Z"
-                                                stroke="currentColor"
-                                                stroke-width="1.8"
-                                                stroke-linecap="round"
-                                            />
-                                        </svg>
+            @if ($games->isNotEmpty())
+                <div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                    @foreach ($games as $game)
+                        <a
+                            href="{{ route('topup.index', ['game' => $game->slug]) }}"
+                            wire:navigate
+                            wire:key="home-game-{{ $game->id }}"
+                            class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl hover:shadow-slate-950/10 focus:outline-none focus:ring-4 focus:ring-indigo-100"
+                        >
+                            <div class="relative aspect-[4/5] overflow-hidden bg-slate-100">
+                                @if ($game->image_path)
+                                    <img
+                                        src="{{ asset('storage/' . $game->image_path) }}"
+                                        alt="{{ $game->name }}"
+                                        class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                        loading="lazy"
+                                    >
+                                @else
+                                    <div class="flex h-full items-center justify-center bg-gradient-to-br from-slate-100 to-indigo-50 px-6 text-center">
+                                        <span class="text-sm font-bold text-slate-500">
+                                            {{ $game->name }}
+                                        </span>
                                     </div>
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="p-4">
-                            <div class="flex items-start justify-between gap-2">
-                                <div>
-                                    <h3 class="line-clamp-2 text-sm font-extrabold text-slate-950">
-                                        {{ $game->name }}
-                                    </h3>
-
-                                    @if ($game->category)
-                                        <p class="mt-1 text-xs font-medium text-slate-500">
-                                            {{ $game->category }}
-                                        </p>
-                                    @endif
-                                </div>
+                                @endif
 
                                 @if ($game->badge)
-                                    <span class="shrink-0 rounded-full bg-indigo-50 px-2 py-1 text-[10px] font-bold text-indigo-600">
+                                    <span class="absolute left-3 top-3 rounded-lg bg-slate-950/85 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white backdrop-blur">
                                         {{ $game->badge }}
                                     </span>
                                 @endif
                             </div>
 
-                            <div class="mt-4 flex items-center justify-between">
-                                <span class="text-xs font-bold text-slate-500">
-                                    Top Up
-                                </span>
+                            <div class="flex flex-1 flex-col p-4">
+                                <div class="flex-1">
+                                    <h3 class="line-clamp-2 text-sm font-bold leading-5 text-slate-950 sm:text-base">
+                                        {{ $game->name }}
+                                    </h3>
 
-                                <span class="text-xs font-extrabold text-indigo-600">
-                                    Pilih
-                                </span>
+                                    <p class="mt-1.5 line-clamp-1 text-xs font-medium text-slate-500">
+                                        {{ data_get($game, 'category.name') ?? data_get($game, 'category') ?? 'Top Up Game' }}
+                                    </p>
+                                </div>
+
+                                <div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
+                                    <span class="text-xs font-medium text-slate-500">
+                                        Tersedia
+                                    </span>
+
+                                    <span class="text-xs font-bold text-indigo-600">
+                                        Pilih Game
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                @empty
-                    <div class="col-span-full rounded-3xl border border-dashed border-slate-300 bg-white p-8 text-center">
-                        <p class="text-sm font-bold text-slate-700">
-                            Belum ada game aktif.
+                        </a>
+                    @endforeach
+                </div>
+            @else
+                <div class="mt-8 rounded-3xl border border-slate-200 bg-slate-50 px-6 py-12 sm:px-10">
+                    <div class="mx-auto max-w-lg text-center">
+                        <p class="text-lg font-bold text-slate-950">
+                            Game belum tersedia
                         </p>
 
-                        <p class="mt-2 text-sm text-slate-500">
-                            Tambahkan game melalui panel admin terlebih dahulu.
+                        <p class="mt-2 text-sm leading-6 text-slate-500">
+                            Daftar game sedang kami siapkan. Silakan periksa kembali
+                            dalam beberapa waktu.
                         </p>
+
+                        <a
+                            href="{{ route('topup.index') }}"
+                            wire:navigate
+                            class="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-100"
+                        >
+                            Buka Halaman Top Up
+                        </a>
                     </div>
-                @endforelse
-            </div>
+                </div>
+            @endif
         </div>
     </section>
 
-    <section id="cek-pesanan" class="bg-white py-12 sm:py-16">
-        <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-            <div class="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 shadow-sm sm:p-8">
-                <div class="text-center">
-                    <p class="text-sm font-bold uppercase tracking-wide text-indigo-600">
+    {{-- PROMO SETELAH KATALOG --}}
+    <livewire:promo-section />
+
+    {{-- CEK PESANAN --}}
+    <section id="cek-pesanan" class="bg-white py-14 sm:py-20">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div class="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 px-6 py-10 sm:px-10">
+                <div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+                    <div class="max-w-2xl">
+                        <p class="text-xs font-bold uppercase tracking-[0.14em] text-indigo-600">
+                            Cek Pesanan
+                        </p>
+
+                        <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-950">
+                            Pantau status transaksi Anda
+                        </h2>
+
+                        <p class="mt-3 text-base leading-7 text-slate-600">
+                            Gunakan nomor invoice untuk melihat status pembayaran
+                            dan proses pesanan.
+                        </p>
+                    </div>
+
+                    <a
+                        href="{{ route('orders.lookup') }}"
+                        wire:navigate
+                        class="inline-flex min-h-12 shrink-0 items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition hover:-translate-y-0.5 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-100"
+                    >
                         Cek Pesanan
-                    </p>
-
-                    <h2 class="mt-2 text-2xl font-extrabold text-slate-950">
-                        Lihat Status Pesanan
-                    </h2>
-
-                    <p class="mt-3 text-sm leading-6 text-slate-600">
-                        Masukkan nomor faktur untuk melihat status transaksi.
-                    </p>
+                    </a>
                 </div>
-
-                <form wire:submit.prevent="checkOrder" class="mt-6 flex flex-col gap-3 sm:flex-row">
-                    <input
-                        type="text"
-                        wire:model.defer="invoice"
-                        placeholder="Contoh: INV-20260706-000001"
-                        class="min-h-12 flex-1 rounded-2xl border-slate-200 bg-white px-4 text-sm font-medium shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    >
-
-                    <button
-                        type="submit"
-                        class="rounded-2xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition hover:-translate-y-0.5 hover:bg-indigo-700"
-                    >
-                        Cek Pesanan
-                    </button>
-                </form>
             </div>
         </div>
     </section>
